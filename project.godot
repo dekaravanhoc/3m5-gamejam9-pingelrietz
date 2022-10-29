@@ -36,6 +36,10 @@ config/name="3 M 5 -gamejam 9 -pingelrietz"
 run/main_scene="res://level/level.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Game="*res://src/Singletons/Game.gd"
+
 [display]
 
 window/size/width=1920
