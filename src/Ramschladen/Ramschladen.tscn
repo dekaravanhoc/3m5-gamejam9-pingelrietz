@@ -9,6 +9,7 @@ radius = 38.0132
 [sub_resource type="CircleShape2D" id=2]
 
 [node name="Ramschladen" type="KinematicBody2D"]
+collision_layer = 4
 script = ExtResource( 1 )
 
 [node name="Area2D" type="Area2D" parent="."]

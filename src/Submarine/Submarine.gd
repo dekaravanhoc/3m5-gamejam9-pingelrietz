@@ -9,6 +9,9 @@ export (float) var max_fuel: float = 100
 var current_fuel : float 
 export (float) var fuel_loss_rate: float = 1
 
+signal fuel_change
+signal gold_gained
+
 #body in range to interact with
 var body
 
@@ -28,12 +31,19 @@ func _physics_process(delta: float) -> void:
 	if current_state != States.FREE && Input.is_action_just_pressed("interact"):
 		if current_state == States.STEAL && body is EnemyShip:
 			gain_gold()
-			print(gold)
 		if current_state == States.BUY && body is Ramschladen:
 			body.buy_fuel(self, max_fuel)
-			print(current_fuel)
+			emit_signal("fuel_change")
 			pass
 
+func _input(event):
+	if is_controller_input():
+		movement_vector = Vector2(
+		Input.get_action_raw_strength("move_right") - Input.get_action_raw_strength("move_left"), 
+		Input.get_action_raw_strength("move_down") - Input.get_action_raw_strength("move_up")
+		)
+	else:
+		movement_vector = Vector2.ZERO
 func is_moving():
 	return movement_vector != Vector2.ZERO
 
@@ -54,28 +64,18 @@ func spotted():
 	print("spotted!")
 
 func gain_gold():
-	gold += body._steal()
+	var gains = body._steal()
+	gold += gains
+	emit_signal("gold_gained", gains)
 	
-	
-func _input(event):
-	if is_controller_input():
-		movement_vector = Vector2(
-		Input.get_action_raw_strength("move_right") - Input.get_action_raw_strength("move_left"), 
-		Input.get_action_raw_strength("move_down") - Input.get_action_raw_strength("move_up")
-		)
-	else:
-		movement_vector = Vector2.ZERO
 
 
 func _on_Area2D_body_entered(body: Node) -> void:
-	print("we encountered....")
 	if body is EnemyShip:
-		print("ship!")
 		current_state = States.STEAL
 		self.body = body
 		pass
 	if body is Ramschladen:
-		print("Shop!")
 		current_state = States.BUY
 		self.body = body
 		pass
