@@ -1,4 +1,6 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://enemy/enemy_ship.tscn" type="PackedScene" id=1]
 
 [node name="Level" type="Node"]
 
@@ -6,6 +8,9 @@
 layer = 0
 
 [node name="World" type="Node2D" parent="WorldLayer"]
+
+[node name="EnemyShip" parent="WorldLayer/World" instance=ExtResource( 1 )]
+position = Vector2( 953, 515 )
 
 [node name="HudLayer" type="CanvasLayer" parent="."]
 
