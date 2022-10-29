@@ -35,7 +35,6 @@ func _change_movement_direction(direction: Vector2 = Vector2.ZERO) -> void:
 	timer.start(time_till_direction_change)
 		
 	
-	timer.connect("timeout", self, "_change_movement_direction")
 	
 
 func _steal() -> int:
