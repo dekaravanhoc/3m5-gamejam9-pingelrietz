@@ -1,6 +1,7 @@
 class_name EnemyShip
 extends Character
 
+export (float) var time_till_direction_change: float = 3.0
 
 func _ready():
 	_change_movement_direction()
@@ -12,10 +13,8 @@ func _change_movement_direction() -> void:
 	
 	movement_vector = new_direction
 	
-	var timer: SceneTreeTimer = get_tree().create_timer(1)
+	var timer: SceneTreeTimer = get_tree().create_timer(time_till_direction_change)
 	
 	timer.connect("timeout", self, "_change_movement_direction")
-	
-	print(movement_vector)
 	
 	
