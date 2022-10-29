@@ -2,7 +2,7 @@ extends TextureProgress
 
 
 func _ready() -> void:
-	Game.submarine.connect("fuel_change", self, "_update_bar")
+	Game.submarine.connect("fuel_changed", self, "_update_bar")
 
 func _process(delta: float) -> void:
 	if(Game.submarine.is_moving()):
