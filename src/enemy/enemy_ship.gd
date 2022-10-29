@@ -9,7 +9,7 @@ export (int, 100, 100000) var max_loot: int = 1000
 
 var loot: int
 
-var current_state = States.DIE
+var current_state = States.MOVE
 
 onready var loot_label: Label = find_node("LootLabel")
 
