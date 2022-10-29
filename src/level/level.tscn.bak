@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/enemy/enemy_ship.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/Submarine/Submarine.tscn" type="PackedScene" id=2]
@@ -12,6 +12,8 @@
 [node name="Hud" type="Control" parent="HudLayer"]
 margin_right = 40.0
 margin_bottom = 40.0
+<<<<<<< HEAD
+=======
 
 [node name="TextureProgress" type="TextureProgress" parent="HudLayer/Hud"]
 margin_left = 66.0
@@ -23,32 +25,29 @@ value = 100.0
 texture_progress = ExtResource( 4 )
 tint_progress = Color( 0, 1, 0, 1 )
 script = ExtResource( 3 )
+>>>>>>> b3e659e4729d2c7c1e0e40018b12d5b0208229b4
 
-[node name="World" type="Node2D" parent="WorldLayer"]
+[node name="World" type="Node2D" parent="."]
 
-[node name="EnemyShip" parent="WorldLayer/World" instance=ExtResource( 1 )]
+[node name="EnemyShip" parent="World" instance=ExtResource( 1 )]
 position = Vector2( 1092, 629 )
 
-[node name="EnemyShip2" parent="WorldLayer/World" instance=ExtResource( 1 )]
+[node name="EnemyShip2" parent="World" instance=ExtResource( 1 )]
 position = Vector2( 831, 193 )
 
-[node name="EnemyShip3" parent="WorldLayer/World" instance=ExtResource( 1 )]
+[node name="EnemyShip3" parent="World" instance=ExtResource( 1 )]
 position = Vector2( 1633, 820 )
 
-[node name="EnemyShip4" parent="WorldLayer/World" instance=ExtResource( 1 )]
+[node name="EnemyShip4" parent="World" instance=ExtResource( 1 )]
 position = Vector2( 424, 903 )
 
-[node name="EnemyShip5" parent="WorldLayer/World" instance=ExtResource( 1 )]
+[node name="EnemyShip5" parent="World" instance=ExtResource( 1 )]
 position = Vector2( 1673, 241 )
 
-[node name="EnemyShip6" parent="WorldLayer/World" instance=ExtResource( 1 )]
+[node name="EnemyShip6" parent="World" instance=ExtResource( 1 )]
 position = Vector2( 189, 151 )
+<<<<<<< HEAD
+=======
 
 [node name="Submarine" parent="World" instance=ExtResource( 2 )]
-
-
-[node name="HudLayer" type="CanvasLayer" parent="."]
-
-[node name="Hud" type="Control" parent="HudLayer"]
-margin_right = 40.0
-margin_bottom = 40.0
+>>>>>>> b3e659e4729d2c7c1e0e40018b12d5b0208229b4

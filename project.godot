@@ -19,7 +19,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/enemy/enemy_ship.gd"
 }, {
-"base": "Area2D",
+"base": "Node2D",
+"class": "Ramschladen",
+"language": "GDScript",
+"path": "res://src/Ramschladen/Ramschladen.gd"
+}, {
+"base": "Reference",
 "class": "Scanner",
 "language": "GDScript",
 "path": "res://src/enemy/scanner.gd"
@@ -37,6 +42,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Character": "",
 "EnemyShip": "",
+"Ramschladen": "",
 "Scanner": "",
 "ScannerLookOut": "",
 "Submarine": ""
@@ -45,7 +51,6 @@ _global_script_class_icons={
 [application]
 
 config/name="3 M 5 -gamejam 9 -pingelrietz"
-run/main_scene="res://src/level/level.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -60,7 +65,6 @@ gdscript/warnings/enable=false
 
 window/size/width=1920
 window/size/height=1080
-window/size/resizable=false
 window/size/always_on_top=true
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
