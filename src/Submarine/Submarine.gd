@@ -16,6 +16,7 @@ var body
 func _ready() -> void:
 	Game.submarine = self
 	current_fuel = max_fuel
+	gold = 100
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -32,7 +33,8 @@ func _physics_process(delta: float) -> void:
 			gain_gold()
 			print(gold)
 		if current_state == States.BUY && body is Ramschladen:
-			body.buy_fuel(self)
+			body.buy_fuel(self, max_fuel)
+			print(current_fuel)
 			pass
 
 func is_moving():
@@ -52,12 +54,14 @@ func gain_gold():
 
 
 func _on_Area2D_body_entered(body: Node) -> void:
+	print("we encountered....")
 	if body is EnemyShip:
+		print("ship!")
 		current_state = States.STEAL
 		self.body = body
 		pass
 	if body is Ramschladen:
-		#press X to buy fuel
+		print("Shop!")
 		current_state = States.BUY
 		self.body = body
 		pass
