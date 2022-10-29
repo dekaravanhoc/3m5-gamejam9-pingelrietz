@@ -1,12 +1,15 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://src/enemy/enemy_ship.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/Submarine/Submarine.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/Ramschladen/Ramschladen.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/HUD/StatsDisplay/StatsDisplay.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/HUD/FuelBar/FuelBar.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/level/Water.tscn" type="PackedScene" id=6]
 
 [node name="Level" type="Node"]
+
+[node name="Water" parent="." instance=ExtResource( 6 )]
 
 [node name="World" type="Node2D" parent="."]
 
@@ -32,7 +35,7 @@ position = Vector2( -1363, -691 )
 position = Vector2( 478, 424 )
 
 [node name="Submarine" parent="World" instance=ExtResource( 2 )]
-position = Vector2( 913, 490 )
+position = Vector2( 105, 512 )
 
 [node name="HudLayer" type="CanvasLayer" parent="."]
 

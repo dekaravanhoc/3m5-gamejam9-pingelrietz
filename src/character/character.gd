@@ -12,6 +12,7 @@ var current_movement_vector: Vector2 = Vector2.UP
 var current_movement_speed: float = 0.0
 
 onready var sprite: Node2D = find_node("Sprite")
+onready var shape: CollisionShape2D = find_node("CollisionShape2D")
 
 
 func _ready():
@@ -45,12 +46,14 @@ func _physics_process(delta):
 	var sprite_rotation: float = ZERO_ROTATION_VECTOR.angle_to(current_movement_vector)
 	
 	sprite.global_rotation = sprite_rotation
+	shape.global_rotation = sprite_rotation
 	
 	
 func _reset_movement():
 	current_movement_speed = 0
 	current_movement_vector = Vector2.UP
 	sprite.global_rotation = 0
+	shape.global_rotation = 0
 	
 	
 	

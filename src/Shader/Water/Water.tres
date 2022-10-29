@@ -9,6 +9,7 @@ uniform float wave_speed : hint_range(0,0.5) = 0.05;
 uniform vec2 sea_sickness = vec2(0.1, 0.2);
 uniform vec2 offset_scale = vec2(0.75,0.75);
 uniform vec2 time_scale = vec2(1.0,1.0);
+uniform sampler2D wave_texture;
 
 void fragment(){
 	vec2 tiled_uvs = UV * tiled_factor;
@@ -18,5 +19,5 @@ void fragment(){
 	waves_uvs_offset.x = sin(TIME * time_scale.x + (tiled_uvs.x + tiled_uvs.y) * offset_scale.x);// * wave_speed;
 	waves_uvs_offset.y = cos(TIME * time_scale.y + (tiled_uvs.x + tiled_uvs.y) * offset_scale.y);// * wave_speed;
 	//COLOR = vec4(waves_uvs_offset, 0,1);
-	COLOR = texture(TEXTURE, tiled_uvs + waves_uvs_offset * sea_sickness);
+	COLOR = texture(wave_texture, tiled_uvs + waves_uvs_offset * sea_sickness);
 }"

@@ -1,24 +1,30 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://src/Shader/Water/Water.tres" type="Shader" id=1]
 [ext_resource path="res://assets/water_dummy.png" type="Texture" id=2]
 [ext_resource path="res://src/Shader/Water/Water.gd" type="Script" id=3]
 
-
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 1 )
-shader_param/tiled_factor = Vector2( 30, 30 )
+shader_param/tiled_factor = Vector2( 90, 90 )
 shader_param/aspect_ratio = 0.5
 shader_param/wave_speed = 0.0
 shader_param/sea_sickness = Vector2( 0.1, 0.2 )
 shader_param/offset_scale = Vector2( 0.397, 0.5 )
 shader_param/time_scale = Vector2( 0.5, 0.5 )
+shader_param/wave_texture = ExtResource( 2 )
+
+[sub_resource type="Gradient" id=2]
+
+[sub_resource type="GradientTexture2D" id=3]
+gradient = SubResource( 2 )
+width = 5760
+height = 3240
 
 [node name="TextureRect" type="Sprite"]
 material = SubResource( 1 )
-position = Vector2( 5, 15 )
-scale = Vector2( 17.1379, 17.284 )
-texture = ExtResource( 2 )
+texture = SubResource( 3 )
+centered = false
 script = ExtResource( 3 )
 
 [connection signal="item_rect_changed" from="." to="." method="calculate_aspect_ratio"]
