@@ -9,7 +9,7 @@ radius = 141.057
 
 [sub_resource type="CircleShape2D" id=2]
 
-[node name="Ramschladen" type="KinematicBody2D"]
+[node name="Ramschladen" type="KinematicBody2D" groups=["poi"]]
 collision_layer = 4
 script = ExtResource( 1 )
 

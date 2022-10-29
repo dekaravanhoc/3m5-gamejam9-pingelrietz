@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/HUD/radar/radar.gd" type="Script" id=1]
+
+[node name="RadarViewportScene" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="PingTimer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 4.0
+autostart = true
+
+[node name="RadarFill" type="Polygon2D" parent="."]
+position = Vector2( 200, 200 )
+color = Color( 0, 1, 0.0941176, 0.788235 )
+polygon = PoolVector2Array( 0, 0, -100, -125, 0, -150 )
+vertex_colors = PoolColorArray( 0, 1, 0.0941176, 0.788235, 0, 1, 0.0941176, 0, 0, 1, 0.0941176, 0.788235 )
+
+[connection signal="timeout" from="PingTimer" to="." method="_on_PingTimer_timeout"]
