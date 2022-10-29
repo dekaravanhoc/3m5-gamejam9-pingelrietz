@@ -13,8 +13,6 @@
 [node name="Hud" type="Control" parent="HudLayer"]
 margin_right = 40.0
 margin_bottom = 40.0
-<<<<<<< HEAD
-=======
 
 [node name="TextureProgress" type="TextureProgress" parent="HudLayer/Hud"]
 margin_left = 66.0
@@ -26,7 +24,6 @@ value = 100.0
 texture_progress = ExtResource( 4 )
 tint_progress = Color( 0, 1, 0, 1 )
 script = ExtResource( 3 )
->>>>>>> b3e659e4729d2c7c1e0e40018b12d5b0208229b4
 
 [node name="World" type="Node2D" parent="."]
 
@@ -47,8 +44,6 @@ position = Vector2( 1673, 241 )
 
 [node name="EnemyShip6" parent="World" instance=ExtResource( 1 )]
 position = Vector2( 189, 151 )
-<<<<<<< HEAD
-=======
 
 [node name="Submarine" parent="World" instance=ExtResource( 2 )]
 
