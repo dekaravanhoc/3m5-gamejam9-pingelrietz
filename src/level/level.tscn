@@ -8,24 +8,6 @@
 
 [node name="Level" type="Node"]
 
-[node name="HudLayer" type="CanvasLayer" parent="."]
-
-[node name="Hud" type="Control" parent="HudLayer"]
-margin_right = 40.0
-margin_bottom = 40.0
-
-[node name="FuelBar" parent="HudLayer/Hud" instance=ExtResource( 5 )]
-margin_left = 1826.0
-margin_top = 657.0
-margin_right = 1858.0
-margin_bottom = 1009.0
-
-[node name="StatsDisplay" parent="HudLayer/Hud" instance=ExtResource( 4 )]
-margin_left = 1479.0
-margin_top = 29.0
-margin_right = 1439.0
-margin_bottom = -11.0
-
 [node name="World" type="Node2D" parent="."]
 
 [node name="EnemyShip" parent="World" instance=ExtResource( 1 )]
@@ -47,6 +29,26 @@ position = Vector2( 1673, 241 )
 position = Vector2( 189, 151 )
 
 [node name="Submarine" parent="World" instance=ExtResource( 2 )]
+max_speed = 1000
+acceleration = 1.0
 
 [node name="Ramschladen" parent="World" instance=ExtResource( 3 )]
 position = Vector2( 478, 424 )
+
+[node name="HudLayer" type="CanvasLayer" parent="."]
+
+[node name="Hud" type="Control" parent="HudLayer"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="FuelBar" parent="HudLayer/Hud" instance=ExtResource( 5 )]
+margin_left = 1826.0
+margin_top = 657.0
+margin_right = 1858.0
+margin_bottom = 1009.0
+
+[node name="StatsDisplay" parent="HudLayer/Hud" instance=ExtResource( 4 )]
+margin_left = 1479.0
+margin_top = 29.0
+margin_right = 1439.0
+margin_bottom = -11.0

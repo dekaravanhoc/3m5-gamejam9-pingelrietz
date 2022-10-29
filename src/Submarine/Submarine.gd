@@ -10,16 +10,19 @@ var current_fuel : float
 export (float) var fuel_loss_rate: float = 1
 
 signal fuel_change
-signal gold_gained
+signal gold_gained(gains)
 
 #body in range to interact with
 var body
 
 
 func _ready() -> void:
-	Game.submarine = self
+	#Game.submarine = self
+	Game.set_submarine(self)
 	current_fuel = max_fuel
-	gold = 100
+	var start_gold = 100
+	gold = start_gold
+	emit_signal("gold_gained", start_gold)
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
