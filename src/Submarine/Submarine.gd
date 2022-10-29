@@ -31,3 +31,6 @@ func get_input_direction():
 		Input.get_action_raw_strength("move_right") - Input.get_action_raw_strength("move_left"), 
 		Input.get_action_raw_strength("move_down") - Input.get_action_raw_strength("move_up")
 	)
+
+func spotted():
+	print("spotted!")
