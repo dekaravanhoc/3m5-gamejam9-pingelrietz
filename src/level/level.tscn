@@ -1,0 +1,34 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/enemy/enemy_ship.tscn" type="PackedScene" id=1]
+
+[node name="Level" type="Node"]
+
+[node name="WorldLayer" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="World" type="Node2D" parent="WorldLayer"]
+
+[node name="EnemyShip" parent="WorldLayer/World" instance=ExtResource( 1 )]
+position = Vector2( 1092, 629 )
+
+[node name="EnemyShip2" parent="WorldLayer/World" instance=ExtResource( 1 )]
+position = Vector2( 831, 193 )
+
+[node name="EnemyShip3" parent="WorldLayer/World" instance=ExtResource( 1 )]
+position = Vector2( 1633, 820 )
+
+[node name="EnemyShip4" parent="WorldLayer/World" instance=ExtResource( 1 )]
+position = Vector2( 424, 903 )
+
+[node name="EnemyShip5" parent="WorldLayer/World" instance=ExtResource( 1 )]
+position = Vector2( 1673, 241 )
+
+[node name="EnemyShip6" parent="WorldLayer/World" instance=ExtResource( 1 )]
+position = Vector2( 189, 151 )
+
+[node name="HudLayer" type="CanvasLayer" parent="."]
+
+[node name="Hud" type="Control" parent="HudLayer"]
+margin_right = 40.0
+margin_bottom = 40.0
