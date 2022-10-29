@@ -18,10 +18,16 @@ _global_script_classes=[ {
 "class": "EnemyShip",
 "language": "GDScript",
 "path": "res://enemy/enemy_ship.gd"
+}, {
+"base": "Character",
+"class": "Submarine",
+"language": "GDScript",
+"path": "res://src/Submarine/Submarine.gd"
 } ]
 _global_script_class_icons={
 "Character": "",
-"EnemyShip": ""
+"EnemyShip": "",
+"Submarine": ""
 }
 
 [application]
