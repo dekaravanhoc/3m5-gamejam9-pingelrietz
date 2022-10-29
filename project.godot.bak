@@ -48,18 +48,21 @@ config/name="3 M 5 -gamejam 9 -pingelrietz"
 run/main_scene="res://src/level/level.tscn"
 config/icon="res://icon.png"
 
-[autoload]
-
-Game="*res://src/Singletons/Game.gd"
-
+<<<<<<< HEAD
 [debug]
 
 gdscript/warnings/enable=false
+=======
+[autoload]
+
+Game="*res://src/Singletons/Game.gd"
+>>>>>>> f11bb689a35f2ef5b4583d25e168d2c0b8c643d1
 
 [display]
 
 window/size/width=1920
 window/size/height=1080
+window/size/resizable=false
 window/size/always_on_top=true
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
@@ -68,8 +71,14 @@ window/stretch/aspect="keep"
 
 common/drop_mouse_on_gui_input_disabled=true
 
-[input]
+[layer_names]
 
+<<<<<<< HEAD
+2d_physics/layer_1="Player"
+2d_physics/layer_2="Enemy"
+2d_physics/layer_3="Shop"
+2d_physics/layer_10="Scanner"
+=======
 move_up={
 "deadzone": 0.5,
 "events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":1,"axis_value":-1.0,"script":null)
@@ -104,13 +113,7 @@ claw={
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":0,"pressure":0.0,"pressed":false,"script":null)
  ]
 }
-
-[layer_names]
-
-2d_physics/layer_1="Player"
-2d_physics/layer_2="Enemy"
-2d_physics/layer_3="Shop"
-2d_physics/layer_10="Scanner"
+>>>>>>> f11bb689a35f2ef5b4583d25e168d2c0b8c643d1
 
 [mono]
 
