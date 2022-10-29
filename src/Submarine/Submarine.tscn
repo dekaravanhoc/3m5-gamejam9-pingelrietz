@@ -3,17 +3,17 @@
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://src/Submarine/Submarine.gd" type="Script" id=2]
 
-[sub_resource type="CapsuleShape2D" id=1]
+[sub_resource type="CircleShape2D" id=1]
+radius = 26.2656
 
 [node name="Submarine" type="KinematicBody2D"]
-position = Vector2( 622, 547 )
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2( 4.38935, 4.84223 )
 shape = SubResource( 1 )
 
-[node name="Icon" type="Sprite" parent="CollisionShape2D"]
+[node name="Sprite" type="Sprite" parent="CollisionShape2D"]
 position = Vector2( 0.227824, -0.413033 )
 scale = Vector2( 0.227824, 0.49693 )
 texture = ExtResource( 1 )

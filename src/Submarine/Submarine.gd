@@ -1,33 +1,29 @@
 class_name Submarine
 extends Character
 
-export (float) var rotation_speed = 5
 
 var gold : int
-var fuel : float
+export (float) var fuel: float = 100 
+export (float) var fuel_loss_rate: float = 0.1
 
 var forward : Vector2
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	forward = Vector2.UP
-	print(forward)
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
-	if is_input():
-		var rotation_direction = get_input_direction()
-		if rotation_direction != forward:
-			movement_vector = rotation_direction
-		else:
-			movement_vector = forward
+	if is_movement_input() and fuel > 0:
+		movement_vector = get_input_direction()
+		fuel -= fuel_loss_rate
+		print(fuel)
 	else:
 		movement_vector = Vector2.ZERO
-	print(movement_vector)
 
-func is_input():
+func is_movement_input():
 	return Input.is_action_pressed("move_down") or Input.is_action_pressed("move_up") or Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right")
 
 func get_input_direction():
