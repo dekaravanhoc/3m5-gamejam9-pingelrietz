@@ -11,7 +11,17 @@ config_version=4
 [application]
 
 config/name="3 M 5 -gamejam 9 -pingelrietz"
+run/main_scene="res://level/level.tscn"
 config/icon="res://icon.png"
+
+[display]
+
+window/size/width=1920
+window/size/height=1080
+window/size/resizable=false
+window/size/always_on_top=true
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
 
 [gui]
 

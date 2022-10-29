@@ -1,0 +1,14 @@
+[gd_scene format=2]
+
+[node name="Level" type="Node"]
+
+[node name="WorldLayer" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="World" type="Node2D" parent="WorldLayer"]
+
+[node name="HudLayer" type="CanvasLayer" parent="."]
+
+[node name="Hud" type="Control" parent="HudLayer"]
+margin_right = 40.0
+margin_bottom = 40.0
