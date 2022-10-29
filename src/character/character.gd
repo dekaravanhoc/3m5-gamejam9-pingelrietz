@@ -47,5 +47,11 @@ func _physics_process(delta):
 	sprite.global_rotation = sprite_rotation
 	
 	
+func _reset_movement():
+	current_movement_speed = 0
+	current_movement_vector = Vector2.UP
+	sprite.global_rotation = 0
+	
+	
 	
 	

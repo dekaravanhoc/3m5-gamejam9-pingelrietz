@@ -10,30 +10,29 @@
 
 [node name="World" type="Node2D" parent="."]
 
-[node name="Submarine" parent="World" instance=ExtResource( 2 )]
-
 [node name="EnemyShip" parent="World" instance=ExtResource( 1 )]
-position = Vector2( 1092, 629 )
+position = Vector2( 412, 2869 )
 
 [node name="EnemyShip2" parent="World" instance=ExtResource( 1 )]
-position = Vector2( 831, 193 )
+position = Vector2( 850, -1462 )
 
 [node name="EnemyShip3" parent="World" instance=ExtResource( 1 )]
-position = Vector2( 1633, 820 )
+position = Vector2( 3074, 1771 )
 
 [node name="EnemyShip4" parent="World" instance=ExtResource( 1 )]
-position = Vector2( 424, 903 )
+position = Vector2( -1878, 2349 )
 
 [node name="EnemyShip5" parent="World" instance=ExtResource( 1 )]
-position = Vector2( 1673, 241 )
+position = Vector2( 3531, -655 )
 
 [node name="EnemyShip6" parent="World" instance=ExtResource( 1 )]
-position = Vector2( 189, 151 )
-
-[node name="Submarine" parent="World" instance=ExtResource( 2 )]
+position = Vector2( -1363, -691 )
 
 [node name="Ramschladen" parent="World" instance=ExtResource( 3 )]
 position = Vector2( 478, 424 )
+
+[node name="Submarine" parent="World" instance=ExtResource( 2 )]
+position = Vector2( 913, 490 )
 
 [node name="HudLayer" type="CanvasLayer" parent="."]
 

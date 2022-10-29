@@ -4,13 +4,16 @@ extends Character
 enum States {FREE, STEAL, BUY}
 var current_state = States.FREE
 
-var gold : int
+var gold : int = 0
 export (float) var max_fuel: float = 100
 var current_fuel : float 
 export (float) var fuel_loss_rate: float = 1
 
+var spawn_point: Vector2
+
 signal fuel_changed
 signal gold_gained(gains)
+signal game_over
 
 #body in range to interact with
 var body
@@ -20,10 +23,9 @@ func _ready() -> void:
 	#Game.submarine = self
 	Game.set_submarine(self)
 	current_fuel = max_fuel
-	var start_gold = 100
-	gold = start_gold
-	emit_signal("gold_gained", start_gold)
-	pass # Replace with function body.
+	emit_signal("gold_gained", 0)
+	spawn_point = global_position
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
@@ -37,7 +39,7 @@ func _physics_process(delta: float) -> void:
 		if current_state == States.BUY && body is Ramschladen:
 			body.buy_fuel(self, max_fuel)
 			emit_signal("fuel_changed")
-			pass
+		
 
 func _input(event):
 	if is_controller_input():
@@ -64,7 +66,11 @@ func get_input_direction():
 	
 
 func spotted():
-	print("spotted!")
+	gold = 0
+	_reset_movement()
+	global_position = spawn_point
+	emit_signal("game_over")
+	
 
 func gain_gold():
 	var gains = body._steal()
@@ -77,15 +83,14 @@ func _on_Area2D_body_entered(body: Node) -> void:
 	if body is EnemyShip:
 		current_state = States.STEAL
 		self.body = body
-		pass
 	if body is Ramschladen:
 		current_state = States.BUY
 		self.body = body
-		pass
+		sprite.animation = "up"
 
 
 func _on_Area2D_body_exited(body: Node) -> void:
 	if current_state != States.FREE:
 		current_state = States.FREE
 		self.body = null
-	pass # Replace with function body.
+		sprite.animation = "down"
