@@ -9,17 +9,20 @@ export (float) var max_fuel: float = 100
 var current_fuel : float 
 export (float) var fuel_loss_rate: float = 1
 
-signal fuel_change
-signal gold_gained
+signal fuel_changed
+signal gold_gained(gains)
 
 #body in range to interact with
 var body
 
 
 func _ready() -> void:
-	Game.submarine = self
+	#Game.submarine = self
+	Game.set_submarine(self)
 	current_fuel = max_fuel
-	gold = 100
+	var start_gold = 100
+	gold = start_gold
+	emit_signal("gold_gained", start_gold)
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -33,7 +36,7 @@ func _physics_process(delta: float) -> void:
 			gain_gold()
 		if current_state == States.BUY && body is Ramschladen:
 			body.buy_fuel(self, max_fuel)
-			emit_signal("fuel_change")
+			emit_signal("fuel_changed")
 			pass
 
 func _input(event):
