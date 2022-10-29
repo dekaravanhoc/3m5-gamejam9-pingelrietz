@@ -4,7 +4,7 @@ extends Character
 enum States {FREE, STEAL, BUY}
 var current_state = States.FREE
 
-var gold : int = 0
+var gold : int = 1000
 export (float) var max_fuel: float = 100
 var current_fuel : float 
 export (float) var fuel_loss_rate: float = 1
@@ -18,11 +18,10 @@ signal game_over
 #body in range to interact with
 var body
 
-
 func _ready() -> void:
 	#Game.submarine = self
 	Game.set_submarine(self)
-	current_fuel = max_fuel
+	current_fuel = 50
 	emit_signal("gold_gained", 0)
 	spawn_point = global_position
 	
@@ -37,8 +36,7 @@ func _physics_process(delta: float) -> void:
 		if current_state == States.STEAL && body is EnemyShip:
 			gain_gold()
 		if current_state == States.BUY && body is Ramschladen:
-			body.buy_fuel(self, max_fuel)
-			emit_signal("fuel_changed")
+			body.initiate_fuel_transfer(self)
 		
 
 func _input(event):
@@ -77,7 +75,6 @@ func gain_gold():
 	gold += gains
 	emit_signal("gold_gained", gains)
 	
-
 
 func _on_Area2D_body_entered(body: Node) -> void:
 	if body is EnemyShip:
