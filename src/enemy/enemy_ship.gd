@@ -8,7 +8,7 @@ export (int, 100, 100000) var min_loot: int = 100
 export (int, 100, 100000) var max_loot: int = 1000
 
 var loot: int
-var current_state = States.DIE
+var current_state = States.MOVE
 
 onready var timer: Timer = find_node("MoveTimer")
 onready var loot_label: Label = find_node("LootLabel")
@@ -35,6 +35,7 @@ func _change_movement_direction(direction: Vector2 = Vector2.ZERO) -> void:
 	timer.start(time_till_direction_change)
 		
 	
+	timer.connect("timeout", self, "_change_movement_direction")
 	
 
 func _steal() -> int:
@@ -42,7 +43,6 @@ func _steal() -> int:
 		_die()
 		return loot
 	return 0
-	
 
 func _die() -> void:
 	current_state = States.DIE

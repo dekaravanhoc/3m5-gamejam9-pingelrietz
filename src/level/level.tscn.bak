@@ -50,4 +50,7 @@ position = Vector2( 189, 151 )
 =======
 
 [node name="Submarine" parent="World" instance=ExtResource( 2 )]
->>>>>>> b3e659e4729d2c7c1e0e40018b12d5b0208229b4
+max_speed = 100
+acceleration = 0.5
+max_fuel = 100.0
+fuel_loss_rate = 0.1
