@@ -44,10 +44,8 @@ func _die() -> void:
 
 
 func _on_LootCheckOut_body_entered(body):
-	if body is Submarine:
-		loot_label.text = "%s Gold" % [loot]
+	loot_label.text = "%s Gold" % [loot]
 
 
 func _on_LootCheckOut_body_exited(body):
-	if body is Submarine:
-		loot_label.text = "??? Gold"
+	loot_label.text = "??? Gold"
