@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/water_dummy.png-a07486c3b5d72e63f07ab5acfcef0d48.stex"
+path="res://.import/water_dummy.png-b92ea8372c5007b645cf8062fb31e5b4.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/assets/Images/water_dummy.png"
-dest_files=[ "res://.import/water_dummy.png-a07486c3b5d72e63f07ab5acfcef0d48.stex" ]
+source_file="res://assets/water_dummy.png"
+dest_files=[ "res://.import/water_dummy.png-b92ea8372c5007b645cf8062fb31e5b4.stex" ]
 
 [params]
 
