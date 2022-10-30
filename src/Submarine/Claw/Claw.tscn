@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/claw_right.png" type="Texture" id=1]
+[ext_resource path="res://assets/chain.png" type="Texture" id=2]
+[ext_resource path="res://assets/claw_left.png" type="Texture" id=3]
+[ext_resource path="res://src/Submarine/Claw/Claw.gd" type="Script" id=4]
+
+[sub_resource type="CircleShape2D" id=3]
+
+[node name="Claw" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="Hook" type="Sprite" parent="."]
+rotation = 1.5708
+
+[node name="HookRight" type="Sprite" parent="Hook"]
+position = Vector2( 21, -61 )
+texture = ExtResource( 1 )
+offset = Vector2( 0, 61 )
+
+[node name="HookLeft" type="Sprite" parent="Hook"]
+position = Vector2( -23, -61 )
+texture = ExtResource( 3 )
+offset = Vector2( 0, 61 )
+
+[node name="Area2D" type="Area2D" parent="Hook"]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hook/Area2D"]
+shape = SubResource( 3 )
+
+[node name="Chain" type="Sprite" parent="Hook"]
+texture = ExtResource( 2 )
+centered = false
+offset = Vector2( -5, 61 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 12, 120 )
+
+[node name="Tween" type="Tween" parent="."]
