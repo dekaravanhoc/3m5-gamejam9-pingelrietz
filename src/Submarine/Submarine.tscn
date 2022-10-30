@@ -22,7 +22,7 @@ animations = [ {
 } ]
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 246.008
+radius = 180.0
 
 [node name="Submarine" type="KinematicBody2D"]
 script = ExtResource( 2 )

@@ -1,19 +1,18 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/Ramschladen/Ramschladen.gd" type="Script" id=1]
-[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://assets/ramschladen.png" type="Texture" id=2]
 [ext_resource path="res://assets/progress_bar_fill.png" type="Texture" id=3]
-[ext_resource path="res://src/Fonts/TestFont.tres" type="DynamicFont" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 141.057
+radius = 330.0
 
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 225, 221 )
 
 [node name="Ramschladen" type="KinematicBody2D" groups=["poi"]]
 collision_layer = 4
 script = ExtResource( 1 )
-fuel_transfer_interval = 1.0
 
 [node name="FuelCooldownTimer" type="Timer" parent="."]
 
@@ -26,7 +25,7 @@ shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 1.49012e-08, 1.19209e-07 )
-scale = Vector2( 2.18281, 2.18281 )
+scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -38,24 +37,12 @@ margin_top = 67.0
 margin_right = 18.0
 margin_bottom = 117.0
 
-[node name="FuelCooldownBar" type="TextureProgress" parent="GUI"]
-margin_left = -43.0
-margin_top = 23.0
-margin_right = -11.0
-margin_bottom = 55.0
-rect_scale = Vector2( 4, 0.5 )
+[node name="FuelBar" type="TextureProgress" parent="GUI"]
+margin_left = -114.0
+margin_top = 137.0
+margin_right = -82.0
+margin_bottom = 169.0
+rect_scale = Vector2( 5.09913, 0.605523 )
 value = 100.0
 texture_progress = ExtResource( 3 )
-tint_progress = Color( 0.447059, 0.529412, 0.14902, 1 )
-
-[node name="FuelAmountLabel" type="RichTextLabel" parent="GUI"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -32.5
-margin_top = -214.0
-margin_right = 40.5
-margin_bottom = -148.0
-custom_fonts/normal_font = ExtResource( 4 )
-text = "000"
+tint_progress = Color( 0, 1, 0, 1 )

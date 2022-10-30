@@ -1,14 +1,13 @@
 class_name Ramschladen
 extends Node2D
 
-onready var transferTimer: Timer = find_node("FuelTransferTimer")
-onready var cooldownTimer: Timer = find_node("FuelCooldownTimer")
-onready var cooldownProgressBar: TextureProgress = find_node("FuelCooldownBar")
-onready var fuel_amount_label: RichTextLabel = find_node("FuelAmountLabel")
+onready var transfer_timer: Timer = find_node("FuelTransferTimer")
+onready var cooldown_timer: Timer = find_node("FuelCooldownTimer")
+onready var fuel_bar: TextureProgress = find_node("FuelBar")
 
 export (int) var fuel_prize: int = 10 
 export (float) var fuel_refill_cooldown: float = 10 # in seconds
-export (float) var fuel_transfer_interval: float = 10 # in seconds
+export (float) var fuel_transfer_interval: float = 1 # in seconds
 export (float) var fuel_per_transfer: float = 1
 export (float) var max_stored_fuel: float = 20
 export (float) var current_stored_fuel: float = 20
@@ -16,55 +15,51 @@ export (float) var current_stored_fuel: float = 20
 var sub = null
 var is_refilling: bool = false
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	transferTimer.connect("timeout", self, "_transfer_fuel")
-	cooldownTimer.connect("timeout", self, "_allow_refill")
-	fuel_amount_label.text = str(current_stored_fuel)
-	cooldownProgressBar.visible = false
+	transfer_timer.connect("timeout", self, "_transfer_fuel")
+	cooldown_timer.connect("timeout", self, "_allow_refill")
+	fuel_bar.max_value = max_stored_fuel
 
 func _process(delta):
 	# handle fuel cooldown
-	if cooldownTimer.time_left != 0:
-		var ratio = (cooldownTimer.time_left / fuel_refill_cooldown)
-		cooldownProgressBar.value = ratio * 100
-		current_stored_fuel = (1 - ratio) * max_stored_fuel
-		fuel_amount_label.text = str(int(current_stored_fuel))
-		print(current_stored_fuel)
-
+	if cooldown_timer.time_left != 0:
+		var ratio = 1 - (cooldown_timer.time_left / fuel_refill_cooldown)
+		current_stored_fuel = ratio * max_stored_fuel
+		fuel_bar.value = current_stored_fuel
 	
-func _set_refill_cooldown() -> void:
+func _set_refill_cooldown(x: float = 1) -> void:
+	print(x)
+	print(fuel_refill_cooldown)
+	print(fuel_refill_cooldown * x)
 	if is_refilling:
 		print("Error: buying fuel is still on cooldown")
 		return
-	cooldownProgressBar.visible = true
 	is_refilling = true
-	# add control node with progress bar to scene
-	cooldownTimer.start(fuel_refill_cooldown)
+	fuel_bar.tint_progress = Color.gray
+	var cooldown = fuel_refill_cooldown * (1 - (current_stored_fuel / max_stored_fuel))
+	cooldown_timer.start(cooldown)
 
 func _allow_refill():
-	cooldownTimer.stop()	
-	cooldownProgressBar.visible = false
+	cooldown_timer.stop()	
 	current_stored_fuel = max_stored_fuel
-	fuel_amount_label.text = str(current_stored_fuel)
 	is_refilling = false
+	fuel_bar.tint_progress = Color.green
 	
-func initiate_fuel_transfer(sub):
+func initiate_fuel_transfer(sub) -> bool:
 	if is_refilling:
 		print("NOPE")
-		return
+		return false
 	if sub.current_fuel == sub.max_fuel:
 		print("Sub has already full fuel")
-		return
+		return false
 	self.sub = sub
 	# start timer that transfers fuel, you pay per transfer
-#	transferTimer.start(fuel_transfer_interval)
-	transferTimer.start(0.5)
+	transfer_timer.start(fuel_transfer_interval)
+	return true
 	
 func stop_fuel_transfer():
-	transferTimer.stop()
-	if current_stored_fuel <= 0.01:
-		_set_refill_cooldown()
+	transfer_timer.stop()
+	_set_refill_cooldown()
 
 func _transfer_fuel():
 	# exist trasfer when: user input OR full fuel OR not enough gold
@@ -83,5 +78,5 @@ func _transfer_fuel():
 	sub.gold -= price
 	sub.current_fuel += amount
 	current_stored_fuel -= amount
-	fuel_amount_label.text = str(current_stored_fuel)
+	fuel_bar.value = current_stored_fuel
 	sub.emit_signal("fuel_changed")
