@@ -58,7 +58,7 @@ func _change_movement_direction(direction: Vector2 = Vector2.ZERO) -> void:
 
 func _steal() -> int:
 	if current_state == States.MOVE:
-		_die()
+		#_die()
 		return loot
 	return 0
 
