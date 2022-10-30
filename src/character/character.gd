@@ -36,6 +36,8 @@ func _physics_process(delta):
 		var rotation_to_target_movement = sign(current_movement_vector.angle_to(movement_vector))
 		var rotation_increment = deg2rad(rotation_to_target_movement * rotation_speed * delta)
 		current_movement_vector = current_movement_vector.rotated(rotation_increment)
+		if abs(current_movement_vector.angle_to(movement_vector)) <= 0.01:
+			current_movement_vector = movement_vector
 	
 	final_movement_vector = current_movement_vector * current_movement_speed * delta
 		
