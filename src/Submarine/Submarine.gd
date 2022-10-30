@@ -106,6 +106,7 @@ func _on_Area2D_body_entered(body: Node) -> void:
 
 func dive_anim(target:float) -> void:
 	#print("diving in richtung", target)
+	MusicController.play_abtauchen_sound()
 	var tween = get_tree().create_tween()
 	tween.tween_property($Sprite, "material:shader_param/progress", target, dive_speed)
 

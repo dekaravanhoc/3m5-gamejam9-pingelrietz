@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/Fonts/TestFont.tres" type="DynamicFont" id=1]
 [ext_resource path="res://src/MainMenu/MainMenu.gd" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://assets/exit_button_pressed.png" type="Texture" id=8]
 [ext_resource path="res://assets/exit_button_focus.png" type="Texture" id=9]
 [ext_resource path="res://assets/start_button_focus.png" type="Texture" id=10]
+[ext_resource path="res://assets/title_screen.png" type="Texture" id=11]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -17,27 +18,25 @@ anchor_bottom = 1.0
 script = ExtResource( 2 )
 level = ExtResource( 3 )
 
-[node name="FocusTimer" type="Timer" parent="."]
+[node name="TitleScreen" type="Sprite" parent="."]
+position = Vector2( 954, 542 )
+scale = Vector2( 3.48395, 3.48395 )
+texture = ExtResource( 11 )
 
-[node name="TitleLabel" type="RichTextLabel" parent="."]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -199.5
-margin_top = 49.0
-margin_right = 199.5
-margin_bottom = 105.0
-custom_fonts/normal_font = ExtResource( 1 )
-text = "Kapitän Klauenhand"
+[node name="FocusTimer" type="Timer" parent="."]
 
 [node name="SubTitleLabel" type="RichTextLabel" parent="."]
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-margin_left = -322.5
-margin_top = 125.0
-margin_right = 322.5
-margin_bottom = 181.0
+anchor_bottom = 0.5
+margin_left = -369.0
+margin_top = -288.0
+margin_right = 390.0
+margin_bottom = -232.0
+custom_colors/default_color = Color( 0.658824, 0.341176, 0.141176, 1 )
 custom_fonts/normal_font = ExtResource( 1 )
-text = "und das Hydroelektrizitäts-U-Boot"
+text = "UND SEIN HYROELEKTRIZITÄTS-U-BOOT"
 
 [node name="Control" type="Control" parent="."]
 margin_left = 95.0
