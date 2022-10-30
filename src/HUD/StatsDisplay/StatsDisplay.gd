@@ -15,6 +15,8 @@ func _update_stats(gains: int = 0):
 	
 	var current_score := int(scoreTextLabel.text)
 	var current_gold := int(goldTextLabel.text)
+	prints(current_score, current_gold)
+	prints(Game.score, submarine.gold)
 	
 	var tween: SceneTreeTween = get_tree().create_tween().set_parallel(true)
 	

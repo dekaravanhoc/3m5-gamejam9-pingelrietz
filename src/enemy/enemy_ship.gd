@@ -19,6 +19,8 @@ onready var spawn_check: Area2D = find_node("SpawnCheck")
 func _ready():
 	timer.connect("timeout", self, "_change_movement_direction")
 	spawn_point = global_position
+	hide()
+	scanner.monitoring = false
 	_spawn()
 	
 
@@ -33,6 +35,9 @@ func _spawn() -> void:
 	_change_movement_direction()
 	loot = randi() % (max_loot - min_loot) + min_loot
 	loot_label.text = "??? Gold"
+	add_to_group("poi")
+	current_state = States.MOVE
+	show()
 	
 
 func _set_spawn_point() -> void:
@@ -60,6 +65,7 @@ func _steal() -> int:
 
 func _die() -> void:
 	current_state = States.DIE
+	remove_from_group("poi")
 	scanner.monitoring = false
 	_reset_movement()
 	hide()
@@ -67,8 +73,9 @@ func _die() -> void:
 	
 
 func pause() -> void:
+	scanner.set_deferred("monitoring", false)
 	.pause()
-	scanner.monitoring = false
+	
 
 func _on_LootCheckOut_body_entered(body):
 	loot_label.text = "%s Gold" % [loot]

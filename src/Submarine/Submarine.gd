@@ -4,7 +4,7 @@ extends Character
 enum States {FREE, STEAL, BUY, REFUEL}
 var current_state = States.FREE
 
-var gold : int = 1000
+var gold : int = 0
 export (float) var max_fuel: float = 100
 var current_fuel : float 
 export (float) var fuel_loss_rate: float = 1

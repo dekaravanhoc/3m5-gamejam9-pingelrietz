@@ -39,6 +39,9 @@ position = Vector2( 478, 424 )
 
 [node name="Submarine" parent="World" instance=ExtResource( 2 )]
 position = Vector2( 105, 512 )
+max_speed = 500
+acceleration = 250
+rotation_speed = 90
 
 [node name="HudLayer" type="CanvasLayer" parent="."]
 

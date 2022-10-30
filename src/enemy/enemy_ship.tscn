@@ -18,8 +18,9 @@ resource_local_to_scene = true
 radius = 1000.0
 
 [sub_resource type="CircleShape2D" id=5]
+radius = 1920.0
 
-[node name="EnemyShip" type="KinematicBody2D" groups=["poi"]]
+[node name="EnemyShip" type="KinematicBody2D"]
 collision_layer = 2
 collision_mask = 3
 script = ExtResource( 3 )
@@ -34,7 +35,6 @@ texture = ExtResource( 1 )
 shape = SubResource( 4 )
 
 [node name="ScannerLookOut" parent="." instance=ExtResource( 2 )]
-color = Color( 0, 0, 0, 1 )
 
 [node name="LootCheckOut" type="Area2D" parent="."]
 collision_layer = 0

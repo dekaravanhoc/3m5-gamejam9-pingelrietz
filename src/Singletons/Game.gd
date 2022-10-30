@@ -19,7 +19,7 @@ func set_submarine(sub) -> void:
 	
 	
 func game_over():
-	pass
+	score = 0
 
 
 func start_level(scene = get_tree().current_scene):
