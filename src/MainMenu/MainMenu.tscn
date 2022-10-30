@@ -1,0 +1,63 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/Fonts/TestFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://src/MainMenu/MainMenu.gd" type="Script" id=2]
+[ext_resource path="res://src/level/level.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/Fonts/bradley_font.tres" type="DynamicFont" id=4]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+level = ExtResource( 3 )
+
+[node name="TitleLabel" type="RichTextLabel" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -199.5
+margin_top = 49.0
+margin_right = 199.5
+margin_bottom = 105.0
+custom_fonts/normal_font = ExtResource( 1 )
+text = "Kapitän Klauenhand"
+
+[node name="SubTitleLabel" type="RichTextLabel" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -322.5
+margin_top = 125.0
+margin_right = 322.5
+margin_bottom = 181.0
+custom_fonts/normal_font = ExtResource( 1 )
+text = "und das Hydroelektrizitäts-U-Boot"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 89.0
+margin_top = 180.0
+margin_right = 557.0
+margin_bottom = 458.0
+custom_constants/separation = 20
+
+[node name="StartButton" type="Button" parent="VBoxContainer"]
+margin_right = 468.0
+margin_bottom = 129.0
+focus_next = NodePath("../ExitButton")
+focus_previous = NodePath("../ExitButton")
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 4 )
+text = "Abtauchen"
+
+[node name="ExitButton" type="Button" parent="VBoxContainer"]
+margin_top = 149.0
+margin_right = 468.0
+margin_bottom = 278.0
+focus_next = NodePath("../StartButton")
+focus_previous = NodePath("../StartButton")
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 4 )
+text = "Exit"
+
+[connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/ExitButton" to="." method="_on_ExitButton_pressed"]
