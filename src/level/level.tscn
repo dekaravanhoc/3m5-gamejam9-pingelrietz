@@ -49,12 +49,6 @@ rotation_speed = 90
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="FuelBar" parent="HudLayer/Hud" instance=ExtResource( 5 )]
-margin_left = 1826.0
-margin_top = 657.0
-margin_right = 1858.0
-margin_bottom = 1009.0
-
 [node name="StatsDisplay" parent="HudLayer/Hud" instance=ExtResource( 4 )]
 margin_left = 1479.0
 margin_top = 29.0
@@ -68,3 +62,9 @@ margin_right = 400.0
 margin_bottom = 400.0
 
 [node name="GameOverScreen" parent="HudLayer/Hud" instance=ExtResource( 8 )]
+
+[node name="FuelBar" parent="HudLayer/Hud" instance=ExtResource( 5 )]
+margin_left = 1814.0
+margin_top = 780.0
+margin_right = 1814.0
+margin_bottom = 780.0

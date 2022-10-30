@@ -4,7 +4,7 @@ signal game_over
 
 var submarine : Submarine
 var score : int = 0
-onready var main_menu = preload("../MainMenu/MainMenu.tscn")
+onready var main_menu = preload("res://src/MainMenu/MainMenu.tscn")
 
 func _ready():
 	connect("game_over", self, "game_over")
