@@ -71,6 +71,7 @@ func _steal() -> int:
 
 
 func _die() -> void:
+	loot_label.text = "0"
 	current_state = States.DIE
 	remove_from_group("poi")
 	scanner.monitoring = false
@@ -86,6 +87,7 @@ func _sink() -> void:
 	tween.tween_property($Sprite, "material:shader_param/progress", 1.0, sink_speed)
 	tween.tween_callback(self, "hide")
 	tween.tween_callback(self, "_spawn")
+	tween.tween_callback(self, "_reset_movement")
 	scanner.visible = false
 	
 
@@ -114,3 +116,8 @@ func _on_OtherEnemyCheck_body_entered(body):
 	var direction_to_body = body.global_position - global_position
 	var new_direction = direction_to_body.rotated(PI)
 	_change_movement_direction(new_direction)
+	
+	
+func _game_over():
+	pause()
+	

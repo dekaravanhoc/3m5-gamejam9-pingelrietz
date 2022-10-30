@@ -62,7 +62,6 @@ func retract() -> void:
 	tween.parallel().tween_property(chain, "region_rect:size:y", 0.0, 0.5).from(distance)
 	tween.tween_callback(self, "hide")
 	tween.tween_callback(Game.submarine, "unpause")
-	Game.submarine.unpause()
 	hide()
 
 

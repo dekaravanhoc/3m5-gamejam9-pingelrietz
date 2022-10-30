@@ -94,4 +94,23 @@ func stop_fuel_transfer():
 	_set_refill_cooldown()
 	fuel_cable.deattach()
 
-
+func _transfer_fuel():
+	# exist trasfer when: user input OR full fuel OR not enough gold
+	if current_stored_fuel == 0 or sub.current_fuel == sub.max_fuel:
+		stop_fuel_transfer()
+	var amount = fuel_per_transfer
+	if sub.current_fuel + amount > sub.max_fuel:
+		amount = sub.max_fuel - sub.current_fuel
+	if current_stored_fuel < amount:
+		amount = current_stored_fuel
+	var price = amount * fuel_prize
+	if sub.gold < price:
+		stop_fuel_transfer()
+		return
+	print("transfer fuel: ", amount)
+	sub.gold -= price
+	sub.current_fuel += amount
+	current_stored_fuel -= amount
+	fuel_bar.value = current_stored_fuel
+	sub.emit_signal("fuel_changed")
+	sub.emit_signal("gold_loss", -price)

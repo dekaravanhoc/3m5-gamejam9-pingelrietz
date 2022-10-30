@@ -10,10 +10,6 @@ var arrow_distance = arrow_pos_bottom.y - arrow_pos_top.y
 func _ready() -> void:
 	Game.submarine.connect("fuel_changed", self, "_update_bar")
 
-func _process(delta: float) -> void:
-	if(Game.submarine.is_moving()):
-		_update_bar()
-
 func _update_bar():
 	# calculate percentage fill of fuel tank
 	var progress = (Game.submarine.current_fuel/Game.submarine.max_fuel) 
