@@ -38,5 +38,4 @@ func _input(event):
 		return
 		
 	if event.is_pressed() and !event.is_echo():
-		get_tree().quit()
-	
+		Game.to_main_menu()

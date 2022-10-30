@@ -4,6 +4,7 @@ signal game_over
 
 var submarine : Submarine
 var score : int = 0
+onready var main_menu = preload("../MainMenu/MainMenu.tscn")
 
 func _ready():
 	connect("game_over", self, "game_over")
@@ -28,3 +29,7 @@ func start_level(scene = get_tree().current_scene):
 	else:
 		get_tree().change_scene_to(scene)
 	
+	
+func to_main_menu():
+	get_tree().change_scene_to(main_menu)
+
