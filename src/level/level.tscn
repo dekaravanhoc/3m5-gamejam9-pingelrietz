@@ -12,7 +12,6 @@
 [node name="Level" type="Node"]
 
 [node name="Water" parent="." instance=ExtResource( 6 )]
-visible = false
 
 [node name="World" type="Node2D" parent="."]
 
@@ -68,3 +67,5 @@ margin_left = 1814.0
 margin_top = 780.0
 margin_right = 1814.0
 margin_bottom = 780.0
+
+[editable path="Water"]
