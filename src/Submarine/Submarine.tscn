@@ -14,14 +14,15 @@ height = 25.9292
 code = "shader_type canvas_item;
 
 uniform bool is_up = false;
-uniform float progress : hint_range(0.0, 1.0, 0.1);
+uniform float progress : hint_range(0.0, 1.0);
 uniform sampler2D mask_texture;
 uniform sampler2D sprite_down;
 uniform sampler2D sprite_up;
 
 vec4 dive_down(vec2 uv){
+	
 	float mask = texture(mask_texture, uv).r;
-	float alpha = 0.;
+	float mix_value = 0.;
 	/*
 	if(texture(sprite_down,uv).a <= 0.1){
 		alpha = 0.0;
@@ -29,16 +30,19 @@ vec4 dive_down(vec2 uv){
 		alpha = mask;
 	}*/
 	if(mask >= progress){
-        alpha = texture(mask_texture, uv).r;
+        mix_value = mask;
     }
 	if(texture(sprite_up, uv).a == 0.0){
-		alpha = 0.;
+		mix_value = 0.;
 	}
 	//float alpha = clamp(mask, texture(sprite_up,uv).a, texture(sprite_up,uv).a);
 	vec3 up_color = texture(sprite_up, uv).rgb;
 	vec3 down_color = texture(sprite_down, uv).rgb;
-	vec3 color = mix(up_color, vec3(alpha), progress);
-	return vec4(color, texture(sprite_up, uv).a );
+	//down_color = smoothstep(down_color, vec3(alpha), progress);
+	vec3 color = mix(down_color, up_color, mix_value);
+	//alpha = mix(texture(sprite_up, uv).a, texture(sprite_down, uv).a, progress);
+	float alpha = mix(texture(sprite_down, uv).a, texture(sprite_up, uv).a, mix_value);
+	return vec4(color, alpha);
 }
 
 void fragment(){
@@ -50,7 +54,7 @@ void fragment(){
 [sub_resource type="ShaderMaterial" id=6]
 shader = SubResource( 5 )
 shader_param/is_up = true
-shader_param/progress = 0.1
+shader_param/progress = 1.0
 shader_param/mask_texture = ExtResource( 4 )
 shader_param/sprite_down = ExtResource( 1 )
 shader_param/sprite_up = ExtResource( 3 )

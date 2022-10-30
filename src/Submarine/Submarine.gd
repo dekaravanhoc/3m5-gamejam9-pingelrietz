@@ -9,6 +9,8 @@ export (float) var max_fuel: float = 100
 var current_fuel : float 
 export (float) var fuel_loss_rate: float = 1
 
+export (float) var dive_speed = 1.0;
+
 var spawn_point: Vector2
 
 signal fuel_changed
@@ -90,12 +92,17 @@ func _on_Area2D_body_entered(body: Node) -> void:
 	if body is Ramschladen:
 		current_state = States.BUY
 		self.body = body
-		sprite.animation = "up"
+		dive_anim(0.0) #sprite.animation = "up"
+
+func dive_anim(target:float) -> void:
+	print("diving in richtung", target)
+	var tween = get_tree().create_tween()
+	tween.tween_property($Sprite, "material:shader_param/progress", target, dive_speed)
 
 
 func _on_Area2D_body_exited(body: Node) -> void:
 	if current_state != States.FREE:
 		current_state = States.FREE
 		self.body = null
-		sprite.animation = "down"
+		dive_anim(1.0) #sprite.animation = "down"
 		#$Claw.release()
