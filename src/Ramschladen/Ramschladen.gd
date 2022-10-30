@@ -28,10 +28,7 @@ func _process(delta):
 		current_stored_fuel = ratio * max_stored_fuel
 		fuel_bar.set_value(current_stored_fuel)
 	
-func _set_refill_cooldown(x: float = 1) -> void:
-	print(x)
-	print(fuel_refill_cooldown)
-	print(fuel_refill_cooldown * x)
+func _set_refill_cooldown() -> void:
 	if is_refilling:
 		print("Error: buying fuel is still on cooldown")
 		return
@@ -46,6 +43,36 @@ func _allow_refill():
 	is_refilling = false
 	fuel_bar.set_color(Color.green)
 	
+func _get_transfer_details(submarine = null):
+	var sub = self.sub
+	if submarine:
+		sub = submarine
+	var amount = fuel_per_transfer
+	if sub.current_fuel + amount > sub.max_fuel:
+		amount = sub.max_fuel - sub.current_fuel
+	if current_stored_fuel < amount:
+		amount = current_stored_fuel
+	var price = amount * fuel_prize
+	if sub.gold < price:
+		return null
+	else:
+		return { "amount": amount, "price": price}
+
+func _transfer_fuel():
+	# exist trasfer when: user input OR full fuel OR not enough gold
+	if current_stored_fuel == 0 or sub.current_fuel == sub.max_fuel:
+		stop_fuel_transfer()
+	var transfer_details = _get_transfer_details()
+	if transfer_details == null:
+		stop_fuel_transfer()
+		return
+	print("transfer fuel: ", transfer_details["amount"])
+	sub.gold -= transfer_details["price"]
+	sub.current_fuel += transfer_details["amount"]
+	current_stored_fuel -= transfer_details["amount"]
+	fuel_bar.set_value(current_stored_fuel)
+	sub.emit_signal("fuel_changed")
+	
 func initiate_fuel_transfer(sub) -> bool:
 	if is_refilling:
 		print("NOPE")
@@ -53,6 +80,9 @@ func initiate_fuel_transfer(sub) -> bool:
 	if sub.current_fuel == sub.max_fuel:
 		print("Sub has already full fuel")
 		return false
+	if _get_transfer_details(sub) == null:
+		return false
+
 	self.sub = sub
 	# start timer that transfers fuel, you pay per transfer
 	transfer_timer.start(fuel_transfer_interval)
@@ -64,22 +94,4 @@ func stop_fuel_transfer():
 	_set_refill_cooldown()
 	fuel_cable.deattach()
 
-func _transfer_fuel():
-	# exist trasfer when: user input OR full fuel OR not enough gold
-	if current_stored_fuel == 0 or sub.current_fuel == sub.max_fuel:
-		stop_fuel_transfer()
-	var amount = fuel_per_transfer
-	if sub.current_fuel + amount > sub.max_fuel:
-		amount = sub.max_fuel - sub.current_fuel
-	if current_stored_fuel < amount:
-		amount = current_stored_fuel
-	var price = amount * fuel_prize
-	if sub.gold < price:
-		stop_fuel_transfer()
-		return
-	print("transfer fuel: ", amount)
-	sub.gold -= price
-	sub.current_fuel += amount
-	current_stored_fuel -= amount
-	fuel_bar.set_value(current_stored_fuel)
-	sub.emit_signal("fuel_changed")
+

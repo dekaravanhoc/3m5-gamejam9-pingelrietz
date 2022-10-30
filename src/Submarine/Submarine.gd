@@ -39,7 +39,7 @@ func _physics_process(delta: float) -> void:
 	if current_state != States.FREE && Input.is_action_just_pressed("interact"):
 		if current_state == States.STEAL && body is EnemyShip:
 			claw.shoot(body, wait_bar)
-		if current_state == States.BUY && body is Ramschladen:
+		if current_state == States.BUY && body is Ramschladen && not is_moving():
 			var success: bool = body.initiate_fuel_transfer(self)
 			if success:
 				current_state = States.REFUEL
