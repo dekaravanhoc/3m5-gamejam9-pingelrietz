@@ -11,6 +11,7 @@
 [node name="Level" type="Node"]
 
 [node name="Water" parent="." instance=ExtResource( 6 )]
+visible = false
 
 [node name="World" type="Node2D" parent="."]
 

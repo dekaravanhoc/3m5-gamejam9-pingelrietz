@@ -24,7 +24,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/Ramschladen/Ramschladen.gd"
 }, {
-"base": "Reference",
+"base": "Area2D",
 "class": "Scanner",
 "language": "GDScript",
 "path": "res://src/enemy/scanner.gd"
