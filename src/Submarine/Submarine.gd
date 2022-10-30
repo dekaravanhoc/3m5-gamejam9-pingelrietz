@@ -1,7 +1,7 @@
 class_name Submarine
 extends Character
 
-enum States {FREE, STEAL, BUY}
+enum States {FREE, STEAL, BUY, REFUEL}
 var current_state = States.FREE
 
 var gold : int = 1000
@@ -36,10 +36,17 @@ func _physics_process(delta: float) -> void:
 		if current_state == States.STEAL && body is EnemyShip:
 			gain_gold()
 		if current_state == States.BUY && body is Ramschladen:
-			body.initiate_fuel_transfer(self)
+			var success: bool = body.initiate_fuel_transfer(self)
+			if success:
+				current_state = States.REFUEL
+
 		
 
 func _input(event):
+	# cancel refuel interaction when any input is pressed
+	if current_state == States.REFUEL and event.is_pressed():
+		body.stop_fuel_transfer()
+		current_state = States.BUY
 	if is_controller_input():
 		movement_vector = Vector2(
 		Input.get_action_raw_strength("move_right") - Input.get_action_raw_strength("move_left"), 
