@@ -32,6 +32,7 @@ func _spawn() -> void:
 		timer.connect("timeout", self, "_spawn")
 		return
 	scanner.monitoring = true
+	shape.disabled = false
 	_change_movement_direction()
 	loot = randi() % (max_loot - min_loot) + min_loot
 	loot_label.text = "??? Gold"
@@ -58,7 +59,7 @@ func _change_movement_direction(direction: Vector2 = Vector2.ZERO) -> void:
 
 func _steal() -> int:
 	if current_state == States.MOVE:
-		#_die()
+		_die()
 		return loot
 	return 0
 
@@ -67,6 +68,7 @@ func _die() -> void:
 	current_state = States.DIE
 	remove_from_group("poi")
 	scanner.monitoring = false
+	shape.disabled = true
 	_reset_movement()
 	hide()
 	_spawn()
@@ -74,6 +76,10 @@ func _die() -> void:
 
 func pause() -> void:
 	scanner.set_deferred("monitoring", false)
+	.pause()
+	
+func unpause() -> void:
+	scanner.set_deferred("monitoring", true)
 	.pause()
 	
 
