@@ -35,6 +35,7 @@ func _finish_focus_animation():
 		focus_progress_bar.value = 0
 	
 func _on_StartButton_pressed():
+	MusicController.play_abtauchen_sound()
 	Game.start_level(level)
 
 
