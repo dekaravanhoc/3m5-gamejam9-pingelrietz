@@ -1,6 +1,5 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://src/Fonts/TestFont.tres" type="DynamicFont" id=1]
 [ext_resource path="res://src/MainMenu/MainMenu.gd" type="Script" id=2]
 [ext_resource path="res://src/level/level.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/exit_button.png" type="Texture" id=4]
@@ -24,19 +23,6 @@ scale = Vector2( 3.48395, 3.48395 )
 texture = ExtResource( 11 )
 
 [node name="FocusTimer" type="Timer" parent="."]
-
-[node name="SubTitleLabel" type="RichTextLabel" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -369.0
-margin_top = -288.0
-margin_right = 390.0
-margin_bottom = -232.0
-custom_colors/default_color = Color( 0.658824, 0.341176, 0.141176, 1 )
-custom_fonts/normal_font = ExtResource( 1 )
-text = "UND SEIN HYROELEKTRIZITÄTS-U-BOOT"
 
 [node name="Control" type="Control" parent="."]
 margin_left = 95.0
