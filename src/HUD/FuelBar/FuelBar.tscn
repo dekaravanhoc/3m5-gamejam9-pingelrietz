@@ -14,7 +14,7 @@ margin_top = -197.0
 margin_right = 17.0
 margin_bottom = -157.0
 rect_scale = Vector2( 1.1456, 8.60912 )
-color = Color( 0.329412, 0.0431373, 0, 1 )
+color = Color( 0.188235, 0.0705882, 0.054902, 1 )
 
 [node name="FuelBarProgress" type="TextureProgress" parent="."]
 margin_left = -23.0
@@ -25,10 +25,11 @@ rect_scale = Vector2( 1.44475, 10.3001 )
 value = 100.0
 texture_progress = ExtResource( 2 )
 fill_mode = 3
-tint_progress = Color( 0.064385, 0.421875, 0.421875, 1 )
+tint_progress = Color( 0.0627451, 0.423529, 0.423529, 1 )
 
 [node name="FuelBar" type="Sprite" parent="."]
 position = Vector2( 38, 0 )
+scale = Vector2( 3.5, 3.5 )
 texture = ExtResource( 4 )
 
 [node name="FuelBarArrow" type="Sprite" parent="."]
