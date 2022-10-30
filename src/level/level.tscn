@@ -49,9 +49,10 @@ position = Vector2( 3709, 4241 )
 
 [node name="Submarine" parent="World" instance=ExtResource( 2 )]
 position = Vector2( 105, 512 )
-max_speed = 500
-acceleration = 250
+max_speed = 300
+acceleration = 150
 rotation_speed = 90
+fuel_loss_rate = 2.0
 
 [node name="EnemyShip_HalfCircle" parent="World" instance=ExtResource( 9 )]
 position = Vector2( -3015, 545 )
