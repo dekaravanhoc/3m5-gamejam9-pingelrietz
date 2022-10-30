@@ -25,6 +25,7 @@ var body
 
 func _ready() -> void:
 	Game.set_submarine(self)
+	current_fuel = 100
 	emit_signal("gold_gained", 0)
 	emit_signal("fuel_changed")
 	spawn_point = global_position
