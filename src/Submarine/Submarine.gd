@@ -24,7 +24,7 @@ func _ready() -> void:
 	current_fuel = 50
 	emit_signal("gold_gained", 0)
 	spawn_point = global_position
-	
+	$Claw.connect("gold_stolen", self, "gain_gold")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
@@ -34,7 +34,7 @@ func _physics_process(delta: float) -> void:
 	#Interaction
 	if current_state != States.FREE && Input.is_action_just_pressed("interact"):
 		if current_state == States.STEAL && body is EnemyShip:
-			gain_gold()
+			$Claw.shoot(body.global_position - self.global_position, body)
 		if current_state == States.BUY && body is Ramschladen:
 			var success: bool = body.initiate_fuel_transfer(self)
 			if success:
@@ -71,14 +71,14 @@ func get_input_direction():
 	print( Input.get_joy_name(0))
 	if Input.get_joy_name(0) == "":
 		print("s")
-	
+
 
 func spotted():
 	Game.emit_signal("game_over")
 	
 
-func gain_gold():
-	var gains = body._steal()
+
+func gain_gold(gains):
 	gold += gains
 	emit_signal("gold_gained", gains)
 	
@@ -98,3 +98,4 @@ func _on_Area2D_body_exited(body: Node) -> void:
 		current_state = States.FREE
 		self.body = null
 		sprite.animation = "down"
+		#$Claw.release()

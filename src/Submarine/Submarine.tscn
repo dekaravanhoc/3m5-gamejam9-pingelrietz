@@ -1,12 +1,59 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/submarine_dive.png" type="Texture" id=1]
 [ext_resource path="res://src/Submarine/Submarine.gd" type="Script" id=2]
 [ext_resource path="res://assets/submarine.png" type="Texture" id=3]
+[ext_resource path="res://src/Shader/Dive/mask.png" type="Texture" id=4]
+[ext_resource path="res://src/Claw/Claw.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CapsuleShape2D" id=3]
-radius = 75.0
-height = 130.0
+radius = 15.9477
+height = 25.9292
+
+[sub_resource type="Shader" id=5]
+code = "shader_type canvas_item;
+
+uniform bool is_up = false;
+uniform float progress : hint_range(0.0, 1.0, 0.1);
+uniform sampler2D mask_texture;
+uniform sampler2D sprite_down;
+uniform sampler2D sprite_up;
+
+vec4 dive_down(vec2 uv){
+	float mask = texture(mask_texture, uv).r;
+	float alpha = 0.;
+	/*
+	if(texture(sprite_down,uv).a <= 0.1){
+		alpha = 0.0;
+	} else {
+		alpha = mask;
+	}*/
+	if(mask >= progress){
+        alpha = texture(mask_texture, uv).r;
+    }
+	if(texture(sprite_up, uv).a == 0.0){
+		alpha = 0.;
+	}
+	//float alpha = clamp(mask, texture(sprite_up,uv).a, texture(sprite_up,uv).a);
+	vec3 up_color = texture(sprite_up, uv).rgb;
+	vec3 down_color = texture(sprite_down, uv).rgb;
+	vec3 color = mix(up_color, vec3(alpha), progress);
+	return vec4(color, texture(sprite_up, uv).a );
+}
+
+void fragment(){
+	if(is_up){
+		COLOR = dive_down(UV);
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = SubResource( 5 )
+shader_param/is_up = true
+shader_param/progress = 0.1
+shader_param/mask_texture = ExtResource( 4 )
+shader_param/sprite_down = ExtResource( 1 )
+shader_param/sprite_up = ExtResource( 3 )
 
 [sub_resource type="SpriteFrames" id=4]
 animations = [ {
@@ -22,15 +69,17 @@ animations = [ {
 } ]
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 246.008
+radius = 478.017
 
 [node name="Submarine" type="KinematicBody2D"]
+collision_mask = 0
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 3 )
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
+material = SubResource( 6 )
 frames = SubResource( 4 )
 animation = "down"
 
@@ -42,6 +91,8 @@ scale = Vector2( 0.999999, 0.999998 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea2D"]
 shape = SubResource( 2 )
+
+[node name="Claw" parent="." instance=ExtResource( 5 )]
 
 [connection signal="body_entered" from="InteractionArea2D" to="." method="_on_Area2D_body_entered"]
 [connection signal="body_exited" from="InteractionArea2D" to="." method="_on_Area2D_body_exited"]
