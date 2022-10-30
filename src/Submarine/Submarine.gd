@@ -25,7 +25,7 @@ var body
 
 func _ready() -> void:
 	Game.set_submarine(self)
-	current_fuel = 50
+	current_fuel = 100
 	emit_signal("gold_gained", 0)
 	spawn_point = global_position
 	$Claw.connect("gold_stolen", self, "gain_gold")
