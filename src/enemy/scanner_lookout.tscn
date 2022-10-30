@@ -6,9 +6,11 @@
 [node name="ScannerLookOut" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 rotation_speed_in_seconds = 10
+color = Color( 0, 0, 0, 1 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="0"]
 polygon = PoolVector2Array( 0, -10, -500, -1000, 500, -1000 )
 
 [node name="ScanAreaDraw" type="Polygon2D" parent="." index="1"]
 color = Color( 0, 1, 0.0392157, 0.388235 )
+polygon = PoolVector2Array( 30, -20, 550, -1030, -550, -1030, -30, -20 )

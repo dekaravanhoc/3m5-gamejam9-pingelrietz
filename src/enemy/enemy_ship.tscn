@@ -1,18 +1,23 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assets/enemy.png" type="Texture" id=1]
 [ext_resource path="res://src/enemy/scanner_lookout.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/enemy/enemy_ship.gd" type="Script" id=3]
 
 [sub_resource type="CapsuleShape2D" id=4]
+resource_local_to_scene = true
 radius = 93.0
 height = 412.0
 
 [sub_resource type="CircleShape2D" id=2]
+resource_local_to_scene = true
 radius = 500.0
 
 [sub_resource type="CircleShape2D" id=3]
+resource_local_to_scene = true
 radius = 1000.0
+
+[sub_resource type="CircleShape2D" id=5]
 
 [node name="EnemyShip" type="KinematicBody2D" groups=["poi"]]
 collision_layer = 2
@@ -29,6 +34,7 @@ texture = ExtResource( 1 )
 shape = SubResource( 4 )
 
 [node name="ScannerLookOut" parent="." instance=ExtResource( 2 )]
+color = Color( 0, 0, 0, 1 )
 
 [node name="LootCheckOut" type="Area2D" parent="."]
 collision_layer = 0
@@ -57,6 +63,13 @@ monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="OtherEnemyCheck"]
 shape = SubResource( 3 )
+
+[node name="SpawnCheck" type="Area2D" parent="."]
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpawnCheck"]
+shape = SubResource( 5 )
 
 [connection signal="body_entered" from="LootCheckOut" to="." method="_on_LootCheckOut_body_entered"]
 [connection signal="body_exited" from="LootCheckOut" to="." method="_on_LootCheckOut_body_exited"]

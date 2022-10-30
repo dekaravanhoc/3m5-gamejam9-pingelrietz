@@ -12,11 +12,11 @@ var current_movement_vector: Vector2 = Vector2.UP
 var current_movement_speed: float = 0.0
 
 onready var sprite: Node2D = find_node("Sprite")
-onready var shape: CollisionShape2D = find_node("CollisionShape2D")
+onready var shape = $CollisionShape2D
 
 
 func _ready():
-	pass
+	Game.connect("game_over", self, "pause")
 
 
 func _physics_process(delta):
@@ -28,9 +28,6 @@ func _physics_process(delta):
 	
 	if movement_vector == Vector2.ZERO:
 		current_movement_speed = clamp(current_movement_speed - acceleration * delta, 0, max_speed)
-	
-#	elif current_movement_speed == 0:
-#		current_movement_vector = current_movement_vector.linear_interpolate(movement_vector * max_speed, acceleration * delta)
 	
 	else:
 		current_movement_speed = clamp(current_movement_speed + acceleration * delta, 0, max_speed)
@@ -47,6 +44,16 @@ func _physics_process(delta):
 	
 	sprite.global_rotation = sprite_rotation
 	shape.global_rotation = sprite_rotation
+	
+	
+func pause() -> void:
+	set_physics_process(false)
+	set_process_input(false)
+	
+	
+func unpause() -> void:
+	set_physics_process(true)
+	set_process_input(true)
 	
 	
 func _reset_movement():

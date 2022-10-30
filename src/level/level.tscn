@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://src/enemy/enemy_ship.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/Submarine/Submarine.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://src/HUD/FuelBar/FuelBar.tscn" type="PackedScene" id=5]
 [ext_resource path="res://src/level/Water.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/HUD/radar/radar.tscn" type="PackedScene" id=7]
+[ext_resource path="res://src/HUD/game_over/game_over_screen.tscn" type="PackedScene" id=8]
 
 [node name="Level" type="Node"]
 
@@ -42,8 +43,8 @@ position = Vector2( 105, 512 )
 [node name="HudLayer" type="CanvasLayer" parent="."]
 
 [node name="Hud" type="Control" parent="HudLayer"]
-margin_right = 40.0
-margin_bottom = 40.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 
 [node name="FuelBar" parent="HudLayer/Hud" instance=ExtResource( 5 )]
 margin_left = 1826.0
@@ -58,5 +59,9 @@ margin_right = 1439.0
 margin_bottom = -11.0
 
 [node name="Radar" parent="HudLayer/Hud" instance=ExtResource( 7 )]
-margin_right = 360.0
-margin_bottom = 360.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 400.0
+margin_bottom = 400.0
+
+[node name="GameOverScreen" parent="HudLayer/Hud" instance=ExtResource( 8 )]

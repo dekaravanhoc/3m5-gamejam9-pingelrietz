@@ -9,18 +9,34 @@ export (int, 100, 100000) var max_loot: int = 1000
 
 var loot: int
 var current_state = States.MOVE
+var spawn_point: Vector2 = Vector2.ZERO
 
 onready var timer: Timer = find_node("MoveTimer")
 onready var loot_label: Label = find_node("LootLabel")
+onready var scanner: Area2D = find_node("ScannerLookOut")
+onready var spawn_check: Area2D = find_node("SpawnCheck")
 
 func _ready():
-	_change_movement_direction()
+	timer.connect("timeout", self, "_change_movement_direction")
+	spawn_point = global_position
+	_spawn()
 	
+
+func _spawn() -> void:
+	_set_spawn_point()
+	yield(get_tree(),"idle_frame")
+	if !spawn_check.get_overlapping_bodies().empty():
+		var timer: SceneTreeTimer = get_tree().create_timer(3)
+		timer.connect("timeout", self, "_spawn")
+		return
+	scanner.monitoring = true
+	_change_movement_direction()
 	loot = randi() % (max_loot - min_loot) + min_loot
 	loot_label.text = "??? Gold"
 	
-	timer.connect("timeout", self, "_change_movement_direction")
 
+func _set_spawn_point() -> void:
+	global_position = spawn_point
 	
 
 func _change_movement_direction(direction: Vector2 = Vector2.ZERO) -> void:
@@ -34,8 +50,6 @@ func _change_movement_direction(direction: Vector2 = Vector2.ZERO) -> void:
 	timer.stop()
 	timer.start(time_till_direction_change)
 		
-	
-	
 
 func _steal() -> int:
 	if current_state == States.MOVE:
@@ -43,10 +57,18 @@ func _steal() -> int:
 		return loot
 	return 0
 
+
 func _die() -> void:
 	current_state = States.DIE
-	queue_free()
+	scanner.monitoring = false
+	_reset_movement()
+	hide()
+	_spawn()
+	
 
+func pause() -> void:
+	.pause()
+	scanner.monitoring = false
 
 func _on_LootCheckOut_body_entered(body):
 	loot_label.text = "%s Gold" % [loot]

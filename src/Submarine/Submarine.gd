@@ -71,10 +71,7 @@ func get_input_direction():
 	
 
 func spotted():
-	gold = 0
-	_reset_movement()
-	global_position = spawn_point
-	emit_signal("game_over")
+	Game.emit_signal("game_over")
 	
 
 func gain_gold():

@@ -48,7 +48,7 @@ margin_right = 397.0
 margin_bottom = 72.0
 size_flags_horizontal = 3
 custom_fonts/normal_font = ExtResource( 1 )
-text = "XXXXXX"
+text = "0"
 
 [node name="Gold" type="HBoxContainer" parent="Panel/VBoxContainer"]
 margin_top = 76.0
@@ -74,4 +74,4 @@ margin_right = 397.0
 margin_bottom = 73.0
 size_flags_horizontal = 3
 custom_fonts/normal_font = ExtResource( 1 )
-text = "XXXXXX"
+text = "0"
