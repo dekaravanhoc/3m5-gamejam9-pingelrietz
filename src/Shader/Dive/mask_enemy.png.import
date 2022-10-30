@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/enemy_sunk.png-7b5d1dbc831f837ce9cfd0dff543b4f2.stex"
+path="res://.import/mask_enemy.png-451e353a9595ca4bc89dbc268fc36abe.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/enemy_sunk.png"
-dest_files=[ "res://.import/enemy_sunk.png-7b5d1dbc831f837ce9cfd0dff543b4f2.stex" ]
+source_file="res://src/Shader/Dive/mask_enemy.png"
+dest_files=[ "res://.import/mask_enemy.png-451e353a9595ca4bc89dbc268fc36abe.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

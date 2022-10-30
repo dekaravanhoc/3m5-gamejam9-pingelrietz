@@ -6,6 +6,7 @@ enum States {MOVE, DIE}
 export (float) var time_till_direction_change: float = 10.0
 export (int, 100, 100000) var min_loot: int = 100
 export (int, 100, 100000) var max_loot: int = 1000
+export (float) var sink_speed: float = 3.0
 
 var loot: int
 var current_state = States.MOVE
@@ -31,9 +32,11 @@ func _spawn() -> void:
 		var timer: SceneTreeTimer = get_tree().create_timer(3)
 		timer.connect("timeout", self, "_spawn")
 		return
+	scanner.visible = true
 	scanner.monitoring = true
 	shape.disabled = false
 	_change_movement_direction()
+	_reset_shader_params()
 	loot = randi() % (max_loot - min_loot) + min_loot
 	loot_label.text = "??? Gold"
 	add_to_group("poi")
@@ -69,10 +72,23 @@ func _die() -> void:
 	remove_from_group("poi")
 	scanner.monitoring = false
 	shape.disabled = true
-	_reset_movement()
-	hide()
-	_spawn()
+	_sink()
+	#_reset_movement()
+	#hide()
+	#_spawn()
 	
+func _sink() -> void:
+	$Sprite.material.set_shader_param("is_sinking", true);
+	var tween = get_tree().create_tween()
+	tween.tween_property($Sprite, "material:shader_param/progress", 1.0, sink_speed)
+	tween.tween_callback(self, "hide")
+	tween.tween_callback(self, "_spawn")
+	scanner.visible = false
+	
+
+func _reset_shader_params() -> void:
+	$Sprite.material.set_shader_param("is_sinking", false);
+	$Sprite.material.set_shader_param("progress", 0.0);
 
 func pause() -> void:
 	scanner.set_deferred("monitoring", false)
