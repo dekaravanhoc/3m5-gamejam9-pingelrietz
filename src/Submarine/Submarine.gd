@@ -13,6 +13,9 @@ export (float) var dive_speed = 1.0;
 
 var spawn_point: Vector2
 
+onready var wait_bar: WaitBar = find_node("WaitBar")
+onready var claw: Claw = find_node("Claw")
+
 signal fuel_changed
 signal gold_gained(gains)
 signal game_over
@@ -21,7 +24,6 @@ signal game_over
 var body
 
 func _ready() -> void:
-	#Game.submarine = self
 	Game.set_submarine(self)
 	current_fuel = 50
 	emit_signal("gold_gained", 0)
@@ -36,7 +38,7 @@ func _physics_process(delta: float) -> void:
 	#Interaction
 	if current_state != States.FREE && Input.is_action_just_pressed("interact"):
 		if current_state == States.STEAL && body is EnemyShip:
-			$Claw.shoot(body.global_position - self.global_position, body)
+			claw.shoot(body, wait_bar)
 		if current_state == States.BUY && body is Ramschladen:
 			var success: bool = body.initiate_fuel_transfer(self)
 			if success:
@@ -44,7 +46,6 @@ func _physics_process(delta: float) -> void:
 				
 	if collider and collider is EnemyShip:
 		spotted()
-
 		
 
 func _input(event):
@@ -77,8 +78,6 @@ func get_input_direction():
 
 func spotted():
 	Game.emit_signal("game_over")
-	
-
 
 func gain_gold(gains):
 	gold += gains
@@ -104,5 +103,4 @@ func _on_Area2D_body_exited(body: Node) -> void:
 	if current_state != States.FREE:
 		current_state = States.FREE
 		self.body = null
-		dive_anim(1.0) #sprite.animation = "down"
-		#$Claw.release()
+		dive_anim(1.0) 

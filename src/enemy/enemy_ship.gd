@@ -6,17 +6,21 @@ enum States {MOVE, DIE}
 export (float) var time_till_direction_change: float = 10.0
 export (int, 100, 100000) var min_loot: int = 100
 export (int, 100, 100000) var max_loot: int = 1000
+export (float) var sink_speed: float = 3.0
+export (PackedScene) var scanner_scene: PackedScene
 
 var loot: int
 var current_state = States.MOVE
 var spawn_point: Vector2 = Vector2.ZERO
+var scanner: Area2D
 
 onready var timer: Timer = find_node("MoveTimer")
 onready var loot_label: Label = find_node("LootLabel")
-onready var scanner: Area2D = find_node("ScannerLookOut")
 onready var spawn_check: Area2D = find_node("SpawnCheck")
 
 func _ready():
+	scanner = scanner_scene.instance()
+	add_child(scanner)
 	timer.connect("timeout", self, "_change_movement_direction")
 	spawn_point = global_position
 	hide()
@@ -31,8 +35,11 @@ func _spawn() -> void:
 		var timer: SceneTreeTimer = get_tree().create_timer(3)
 		timer.connect("timeout", self, "_spawn")
 		return
+	scanner.visible = true
 	scanner.monitoring = true
+	shape.disabled = false
 	_change_movement_direction()
+	_reset_shader_params()
 	loot = randi() % (max_loot - min_loot) + min_loot
 	loot_label.text = "??? Gold"
 	add_to_group("poi")
@@ -58,7 +65,7 @@ func _change_movement_direction(direction: Vector2 = Vector2.ZERO) -> void:
 
 func _steal() -> int:
 	if current_state == States.MOVE:
-		#_die()
+		_die()
 		return loot
 	return 0
 
@@ -67,13 +74,31 @@ func _die() -> void:
 	current_state = States.DIE
 	remove_from_group("poi")
 	scanner.monitoring = false
-	_reset_movement()
-	hide()
-	_spawn()
+	shape.disabled = true
+	_sink()
+	#_reset_movement()
+	#hide()
+	#_spawn()
 	
+func _sink() -> void:
+	$Sprite.material.set_shader_param("is_sinking", true);
+	var tween = get_tree().create_tween()
+	tween.tween_property($Sprite, "material:shader_param/progress", 1.0, sink_speed)
+	tween.tween_callback(self, "hide")
+	tween.tween_callback(self, "_spawn")
+	scanner.visible = false
+	
+
+func _reset_shader_params() -> void:
+	$Sprite.material.set_shader_param("is_sinking", false);
+	$Sprite.material.set_shader_param("progress", 0.0);
 
 func pause() -> void:
 	scanner.set_deferred("monitoring", false)
+	.pause()
+	
+func unpause() -> void:
+	scanner.set_deferred("monitoring", true)
 	.pause()
 	
 

@@ -1,25 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/claw_right.png" type="Texture" id=1]
 [ext_resource path="res://assets/chain.png" type="Texture" id=2]
 [ext_resource path="res://assets/claw_left.png" type="Texture" id=3]
-[ext_resource path="res://src/Claw/Claw.gd" type="Script" id=4]
-
-[sub_resource type="SpriteFrames" id=1]
-animations = [ {
-"frames": [ ExtResource( 1 ) ],
-"loop": true,
-"name": "default",
-"speed": 5.0
-} ]
-
-[sub_resource type="SpriteFrames" id=2]
-animations = [ {
-"frames": [ ExtResource( 3 ) ],
-"loop": true,
-"name": "default",
-"speed": 5.0
-} ]
+[ext_resource path="res://src/Submarine/Claw/Claw.gd" type="Script" id=4]
 
 [sub_resource type="CircleShape2D" id=3]
 
@@ -29,17 +13,20 @@ script = ExtResource( 4 )
 [node name="Hook" type="Sprite" parent="."]
 rotation = 1.5708
 
-[node name="HookRight" type="AnimatedSprite" parent="Hook"]
+[node name="HookRight" type="Sprite" parent="Hook"]
 position = Vector2( 21, -61 )
-frames = SubResource( 1 )
+texture = ExtResource( 1 )
+offset = Vector2( 0, 61 )
 
-[node name="HookLeft" type="AnimatedSprite" parent="Hook"]
+[node name="HookLeft" type="Sprite" parent="Hook"]
 position = Vector2( -23, -61 )
-frames = SubResource( 2 )
+texture = ExtResource( 3 )
+offset = Vector2( 0, 61 )
 
 [node name="Area2D" type="Area2D" parent="Hook"]
-visible = false
-collision_mask = 3
+collision_layer = 0
+collision_mask = 2
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hook/Area2D"]
 shape = SubResource( 3 )
@@ -47,10 +34,8 @@ shape = SubResource( 3 )
 [node name="Chain" type="Sprite" parent="Hook"]
 texture = ExtResource( 2 )
 centered = false
-offset = Vector2( -5, 0 )
+offset = Vector2( -5, 61 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 12, 120 )
 
 [node name="Tween" type="Tween" parent="."]
-
-[connection signal="body_entered" from="Hook/Area2D" to="." method="_on_Area2D_body_entered"]

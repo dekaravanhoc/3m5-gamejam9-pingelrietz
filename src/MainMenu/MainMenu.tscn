@@ -1,15 +1,23 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://src/Fonts/TestFont.tres" type="DynamicFont" id=1]
 [ext_resource path="res://src/MainMenu/MainMenu.gd" type="Script" id=2]
 [ext_resource path="res://src/level/level.tscn" type="PackedScene" id=3]
-[ext_resource path="res://src/Fonts/bradley_font.tres" type="DynamicFont" id=4]
+[ext_resource path="res://assets/exit_button.png" type="Texture" id=4]
+[ext_resource path="res://assets/start_button_pressed.png" type="Texture" id=5]
+[ext_resource path="res://assets/start_button.png" type="Texture" id=6]
+[ext_resource path="res://assets/progress_bar_fill.png" type="Texture" id=7]
+[ext_resource path="res://assets/exit_button_pressed.png" type="Texture" id=8]
+[ext_resource path="res://assets/exit_button_focus.png" type="Texture" id=9]
+[ext_resource path="res://assets/start_button_focus.png" type="Texture" id=10]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 2 )
 level = ExtResource( 3 )
+
+[node name="FocusTimer" type="Timer" parent="."]
 
 [node name="TitleLabel" type="RichTextLabel" parent="."]
 anchor_left = 0.5
@@ -31,33 +39,73 @@ margin_bottom = 181.0
 custom_fonts/normal_font = ExtResource( 1 )
 text = "und das Hydroelektrizitäts-U-Boot"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="Control" type="Control" parent="."]
+margin_left = 95.0
+margin_top = 679.0
+margin_right = 462.0
+margin_bottom = 851.0
+
+[node name="StartButtonFocusBackground" type="ColorRect" parent="Control"]
+anchor_left = 0.5
 anchor_top = 0.5
+anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = 89.0
-margin_top = 180.0
-margin_right = 557.0
-margin_bottom = 458.0
-custom_constants/separation = 20
+margin_left = 159.5
+margin_top = -38.0
+margin_right = 199.5
+margin_bottom = 2.0
+rect_scale = Vector2( 0.46732, 2.21123 )
+color = Color( 0.329412, 0.0431373, 0, 1 )
 
-[node name="StartButton" type="Button" parent="VBoxContainer"]
-margin_right = 468.0
-margin_bottom = 129.0
-focus_next = NodePath("../ExitButton")
-focus_previous = NodePath("../ExitButton")
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 4 )
-text = "Abtauchen"
+[node name="StartButtonFocusProgress" type="TextureProgress" parent="Control"]
+margin_left = 343.0
+margin_top = 48.0
+margin_right = 375.0
+margin_bottom = 80.0
+rect_scale = Vector2( 0.584989, 2.74289 )
+texture_progress = ExtResource( 7 )
+fill_mode = 3
+tint_progress = Color( 0.0627451, 0.423529, 0.423529, 1 )
 
-[node name="ExitButton" type="Button" parent="VBoxContainer"]
-margin_top = 149.0
-margin_right = 468.0
-margin_bottom = 278.0
-focus_next = NodePath("../StartButton")
-focus_previous = NodePath("../StartButton")
-size_flags_vertical = 3
-custom_fonts/font = ExtResource( 4 )
-text = "Exit"
+[node name="StartButton" type="TextureButton" parent="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -180.0
+margin_top = -80.0
+margin_right = -77.0
+margin_bottom = -34.0
+rect_scale = Vector2( 3.5, 3.5 )
+focus_neighbour_left = NodePath("../../ExitButton")
+focus_neighbour_top = NodePath("../../ExitButton")
+focus_neighbour_right = NodePath("../../ExitButton")
+focus_neighbour_bottom = NodePath("../../ExitButton")
+focus_next = NodePath("../../ExitButton")
+focus_previous = NodePath("../../ExitButton")
+texture_normal = ExtResource( 6 )
+texture_pressed = ExtResource( 5 )
+texture_focused = ExtResource( 10 )
+stretch_mode = 4
 
-[connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
-[connection signal="pressed" from="VBoxContainer/ExitButton" to="." method="_on_ExitButton_pressed"]
+[node name="ExitButton" type="TextureButton" parent="."]
+margin_left = 99.0
+margin_top = 832.0
+margin_right = 202.0
+margin_bottom = 878.0
+rect_scale = Vector2( 3.5, 3.5 )
+focus_neighbour_left = NodePath("../Control/StartButton")
+focus_neighbour_top = NodePath("../Control/StartButton")
+focus_neighbour_right = NodePath("../Control/StartButton")
+focus_neighbour_bottom = NodePath("../Control/StartButton")
+focus_next = NodePath("../Control/StartButton")
+focus_previous = NodePath("../Control/StartButton")
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 8 )
+texture_focused = ExtResource( 9 )
+stretch_mode = 4
+
+[connection signal="focus_entered" from="Control/StartButton" to="." method="_on_StartButton_focus_entered"]
+[connection signal="focus_exited" from="Control/StartButton" to="." method="_on_StartButton_focus_exited"]
+[connection signal="pressed" from="Control/StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="pressed" from="ExitButton" to="." method="_on_ExitButton_pressed"]
