@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://src/Ramschladen/Ramschladen.gd" type="Script" id=1]
 [ext_resource path="res://assets/ramschladen.png" type="Texture" id=2]
 [ext_resource path="res://assets/progress_bar_fill.png" type="Texture" id=3]
 [ext_resource path="res://src/Ramschladen/fuel_cable.gd" type="Script" id=4]
 [ext_resource path="res://assets/chain.png" type="Texture" id=5]
+[ext_resource path="res://src/HUD/CustomProgressBar/CustomProgressBar.tscn" type="PackedScene" id=6]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 330.0
@@ -39,7 +40,8 @@ margin_top = 67.0
 margin_right = 18.0
 margin_bottom = 117.0
 
-[node name="FuelBar" type="TextureProgress" parent="GUI"]
+[node name="FuelBar_old" type="TextureProgress" parent="GUI"]
+visible = false
 margin_left = -114.0
 margin_top = 137.0
 margin_right = -82.0
@@ -48,6 +50,13 @@ rect_scale = Vector2( 5.09913, 0.605523 )
 value = 100.0
 texture_progress = ExtResource( 3 )
 tint_progress = Color( 0, 1, 0, 1 )
+
+[node name="FuelBar" parent="GUI" instance=ExtResource( 6 )]
+margin_left = -99.0
+margin_top = 135.0
+margin_right = -27.48
+margin_bottom = 137.88
+rect_scale = Vector2( 1.27549, 1.27549 )
 
 [node name="FuelCable" type="Sprite" parent="."]
 position = Vector2( -134, 164 )
@@ -62,7 +71,6 @@ region_enabled = true
 region_rect = Rect2( 0, 0, 10, 0 )
 
 [node name="End" type="Sprite" parent="FuelCable"]
-visible = false
 
 [node name="Pump" type="Sprite" parent="FuelCable"]
 rotation = -1.5708
