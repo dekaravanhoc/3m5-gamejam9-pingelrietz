@@ -32,6 +32,7 @@ vec4 dive_down(vec2 uv){
 	vec3 color = mix(down_color, up_color, mix_value);
 	//alpha = mix(texture(sprite_up, uv).a, texture(sprite_down, uv).a, progress);
 	float alpha = mix(texture(sprite_down, uv).a, texture(sprite_up, uv).a, mix_value);
+	alpha = mix(alpha, 0, progress);
 	return vec4(color, alpha);
 }
 
