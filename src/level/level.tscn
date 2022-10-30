@@ -42,8 +42,6 @@ position = Vector2( 105, 512 )
 max_speed = 500
 acceleration = 250
 rotation_speed = 90
-max_fuel = null
-fuel_loss_rate = null
 
 [node name="HudLayer" type="CanvasLayer" parent="."]
 

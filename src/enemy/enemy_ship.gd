@@ -7,17 +7,20 @@ export (float) var time_till_direction_change: float = 10.0
 export (int, 100, 100000) var min_loot: int = 100
 export (int, 100, 100000) var max_loot: int = 1000
 export (float) var sink_speed: float = 3.0
+export (PackedScene) var scanner_scene: PackedScene
 
 var loot: int
 var current_state = States.MOVE
 var spawn_point: Vector2 = Vector2.ZERO
+var scanner: Area2D
 
 onready var timer: Timer = find_node("MoveTimer")
 onready var loot_label: Label = find_node("LootLabel")
-onready var scanner: Area2D = find_node("ScannerLookOut")
 onready var spawn_check: Area2D = find_node("SpawnCheck")
 
 func _ready():
+	scanner = scanner_scene.instance()
+	add_child(scanner)
 	timer.connect("timeout", self, "_change_movement_direction")
 	spawn_point = global_position
 	hide()
