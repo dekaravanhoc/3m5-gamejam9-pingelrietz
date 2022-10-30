@@ -39,6 +39,9 @@ func _physics_process(delta: float) -> void:
 			var success: bool = body.initiate_fuel_transfer(self)
 			if success:
 				current_state = States.REFUEL
+				
+	if collider and collider is EnemyShip:
+		spotted()
 
 		
 

@@ -4,6 +4,7 @@ extends Node2D
 onready var transfer_timer: Timer = find_node("FuelTransferTimer")
 onready var cooldown_timer: Timer = find_node("FuelCooldownTimer")
 onready var fuel_bar: TextureProgress = find_node("FuelBar")
+onready var fuel_cable: FuelCable = find_node("FuelCable")
 
 export (int) var fuel_prize: int = 10 
 export (float) var fuel_refill_cooldown: float = 10 # in seconds
@@ -55,11 +56,13 @@ func initiate_fuel_transfer(sub) -> bool:
 	self.sub = sub
 	# start timer that transfers fuel, you pay per transfer
 	transfer_timer.start(fuel_transfer_interval)
+	fuel_cable.attach(sub)
 	return true
 	
 func stop_fuel_transfer():
 	transfer_timer.stop()
 	_set_refill_cooldown()
+	fuel_cable.deattach()
 
 func _transfer_fuel():
 	# exist trasfer when: user input OR full fuel OR not enough gold

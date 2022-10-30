@@ -11,6 +11,8 @@ var movement_vector: Vector2 = Vector2.ZERO
 var current_movement_vector: Vector2 = Vector2.UP
 var current_movement_speed: float = 0.0
 
+var collider: KinematicBody2D
+
 onready var sprite: Node2D = find_node("Sprite")
 onready var shape = $CollisionShape2D
 
@@ -38,7 +40,9 @@ func _physics_process(delta):
 	final_movement_vector = current_movement_vector * current_movement_speed * delta
 		
 	
-	move_and_collide(final_movement_vector)
+	var collision_object =  move_and_collide(final_movement_vector)
+	if collision_object:
+		collider = collision_object.collider
 	
 	var sprite_rotation: float = ZERO_ROTATION_VECTOR.angle_to(current_movement_vector)
 	
