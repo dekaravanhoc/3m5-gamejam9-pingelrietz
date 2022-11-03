@@ -30,6 +30,7 @@ func _ready():
 
 func _spawn() -> void:
 	_set_spawn_point()
+	yield(get_tree(),"physics_frame")
 	yield(get_tree(),"idle_frame")
 	if !spawn_check.get_overlapping_bodies().empty():
 		var timer: SceneTreeTimer = get_tree().create_timer(3)

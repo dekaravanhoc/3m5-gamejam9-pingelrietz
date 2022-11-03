@@ -19,5 +19,5 @@ void fragment(){
 	waves_uvs_offset.x = sin(TIME * time_scale.x + (tiled_uvs.x + tiled_uvs.y) * offset_scale.x);// * wave_speed;
 	waves_uvs_offset.y = sin(TIME * time_scale.y + (tiled_uvs.x + tiled_uvs.y) * offset_scale.y);// * wave_speed;
 	//COLOR = vec4(waves_uvs_offset, 0,1);
-	COLOR = texture(wave_texture, tiled_uvs + waves_uvs_offset * sea_sickness);
+	COLOR = texture(TEXTURE, tiled_uvs + waves_uvs_offset * sea_sickness);
 }"

@@ -5,40 +5,40 @@
 [ext_resource path="res://src/Ramschladen/Ramschladen.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/HUD/StatsDisplay/StatsDisplay.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/HUD/FuelBar/FuelBar.tscn" type="PackedScene" id=5]
-[ext_resource path="res://src/level/Water.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/Shader/Water/Water.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/HUD/radar/radar.tscn" type="PackedScene" id=7]
 [ext_resource path="res://src/HUD/game_over/game_over_screen.tscn" type="PackedScene" id=8]
 [ext_resource path="res://src/enemy/enemy_ship_half_circle.tscn" type="PackedScene" id=9]
 
 [node name="Level" type="Node"]
 
-[node name="Water" parent="." instance=ExtResource( 6 )]
+[node name="TextureRect" parent="." instance=ExtResource( 6 )]
 
 [node name="World" type="Node2D" parent="."]
 
 [node name="EnemyShip" parent="World" instance=ExtResource( 1 )]
-position = Vector2( 412, 2869 )
+position = Vector2( 3000, 6998 )
 
 [node name="EnemyShip2" parent="World" instance=ExtResource( 1 )]
-position = Vector2( 850, -1462 )
+position = Vector2( -64, -3672 )
 
 [node name="EnemyShip3" parent="World" instance=ExtResource( 1 )]
-position = Vector2( 3074, 1771 )
+position = Vector2( 1362, 3712 )
 
 [node name="EnemyShip4" parent="World" instance=ExtResource( 1 )]
-position = Vector2( -1878, 2349 )
+position = Vector2( -4735, 4724 )
 
 [node name="EnemyShip5" parent="World" instance=ExtResource( 1 )]
-position = Vector2( 3531, -655 )
+position = Vector2( 4052, -3690 )
 
 [node name="EnemyShip6" parent="World" instance=ExtResource( 1 )]
-position = Vector2( -1363, -691 )
+position = Vector2( -4208, -3256 )
 
 [node name="Ramschladen" parent="World" instance=ExtResource( 3 )]
 position = Vector2( 1021, -48 )
 
 [node name="Ramschladen2" parent="World" instance=ExtResource( 3 )]
-position = Vector2( -3480, 1558 )
+position = Vector2( -6543, 3023 )
 rotation = -2.07713
 
 [node name="Ramschladen3" parent="World" instance=ExtResource( 3 )]
@@ -47,30 +47,30 @@ position = Vector2( 5626, -1867 )
 [node name="Ramschladen4" parent="World" instance=ExtResource( 3 )]
 position = Vector2( 3709, 4241 )
 
+[node name="EnemyShip_HalfCircle" parent="World" instance=ExtResource( 9 )]
+position = Vector2( -5860, 659 )
+
+[node name="EnemyShip_HalfCircle2" parent="World" instance=ExtResource( 9 )]
+position = Vector2( 3568, 257 )
+
+[node name="EnemyShip_HalfCircle4" parent="World" instance=ExtResource( 9 )]
+position = Vector2( -1960, 559 )
+
+[node name="EnemyShip_HalfCircle5" parent="World" instance=ExtResource( 9 )]
+position = Vector2( 6053, 4525 )
+
+[node name="EnemyShip_HalfCircle6" parent="World" instance=ExtResource( 9 )]
+position = Vector2( -1203, 6670 )
+
+[node name="EnemyShip_HalfCircle3" parent="World" instance=ExtResource( 9 )]
+position = Vector2( 7471, 532 )
+
 [node name="Submarine" parent="World" instance=ExtResource( 2 )]
-position = Vector2( 105, 512 )
+position = Vector2( 968, 704 )
 max_speed = 300
 acceleration = 150
 rotation_speed = 90
 fuel_loss_rate = 2.0
-
-[node name="EnemyShip_HalfCircle" parent="World" instance=ExtResource( 9 )]
-position = Vector2( -3015, 545 )
-
-[node name="EnemyShip_HalfCircle2" parent="World" instance=ExtResource( 9 )]
-position = Vector2( -352, 257 )
-
-[node name="EnemyShip_HalfCircle4" parent="World" instance=ExtResource( 9 )]
-position = Vector2( -1262, -143 )
-
-[node name="EnemyShip_HalfCircle5" parent="World" instance=ExtResource( 9 )]
-position = Vector2( 1456, 1655 )
-
-[node name="EnemyShip_HalfCircle6" parent="World" instance=ExtResource( 9 )]
-position = Vector2( -1464, 1619 )
-
-[node name="EnemyShip_HalfCircle3" parent="World" instance=ExtResource( 9 )]
-position = Vector2( 6061, 634 )
 
 [node name="HudLayer" type="CanvasLayer" parent="."]
 
@@ -97,5 +97,3 @@ margin_left = 1814.0
 margin_top = 780.0
 margin_right = 1814.0
 margin_bottom = 780.0
-
-[editable path="Water"]
