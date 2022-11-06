@@ -70,7 +70,7 @@ texture = ExtResource( 1 )
 position = Vector2( 0, -282 )
 amount = 500
 lifetime = 5.0
-visibility_rect = Rect2( -960, -540, 1920, 1080 )
+visibility_rect = Rect2( -1920, -1080, 3840, 2160 )
 process_material = SubResource( 7 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

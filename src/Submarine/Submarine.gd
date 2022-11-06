@@ -1,7 +1,7 @@
 class_name Submarine
 extends Character
 
-enum States {FREE, CAN_STEAL, CAN_BUY, STEALING, BUYING, REFUEL}
+enum States {FREE, CAN_STEAL, CAN_BUY, STEALING, BUYING, REFUEL, GAME_OVER}
 var current_state = States.FREE
 
 var gold : int = 0
@@ -22,7 +22,8 @@ signal gold_gained(gains)
 signal gold_loss(loss)
 
 #body in range to interact with
-var body
+var current_target: Node2D
+var possible_targets: Array
 
 func _ready() -> void:
 	Game.set_submarine(self)
@@ -30,87 +31,155 @@ func _ready() -> void:
 	emit_signal("gold_gained", 0)
 	emit_signal("fuel_changed")
 	spawn_point = global_position
-	$Claw.connect("gold_stolen", self, "gain_gold")
+	claw.connect("gold_stolen", self, "gain_gold")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	#Movement
-	if is_moving():
+	if _is_moving():
 		current_fuel = clamp(float(current_fuel) - float(fuel_loss_rate) * delta, 0, max_fuel)
 		emit_signal("fuel_changed")
-		if !moving_particles.emitting:
-			moving_particles.emitting = true
-		
-	else:
-		if moving_particles.emitting:
-			moving_particles.emitting = false
-		
-		if current_fuel == 0:
-			if current_state == States.CAN_BUY and gold > 0:
-				pass
-			else:
-				Game.emit_signal("game_over")
+	
+	if current_fuel == 0:
+		if current_state == States.CAN_BUY and gold > 0:
+			pass
+		else:
+			Game.emit_signal("game_over")
 			
 	if current_state == States.CAN_STEAL:
-		claw.look_at(body.global_position)
+		claw.look_at(current_target.global_position)
 				
 	if collider and collider is EnemyShip:
 		spotted()
 		
-		
+
+func spotted():
+	Game.emit_signal("game_over")
+	current_state = States.GAME_OVER
+
+
+func gain_gold(gains):
+	gold += gains
+	emit_signal("gold_gained", gains)
+
+
 
 func _input(event):
+	if Input.is_action_pressed("ui_cancel"):
+		Game.to_main_menu()
 	_set_movement_vector()
 	match current_state:
 		States.FREE:
 			pass
 		States.CAN_STEAL:
 			if Input.is_action_just_pressed("interact"):
-				claw.shoot(body, wait_bar)
+				_start_stealing()
 		States.CAN_BUY:
 			if Input.is_action_just_pressed("interact"):
-				var success: bool = body.initiate_fuel_transfer(self)
+				var success: bool = current_target.initiate_fuel_transfer(self)
 				if success:
 					current_state = States.REFUEL
 		States.REFUEL:
-			if is_moving():
-				body.stop_fuel_transfer()
+			if _is_moving():
+				current_target.stop_fuel_transfer()
 				current_state = States.CAN_BUY
 		
 	
 func _set_movement_vector():
-	if is_controller_input() and current_fuel > 0:
+	if _is_controller_input() and current_fuel > 0:
+		if !_is_moving():
+			_start_moving()
 		movement_vector = Vector2(
 		Input.get_action_raw_strength("move_right") - Input.get_action_raw_strength("move_left"), 
 		Input.get_action_raw_strength("move_down") - Input.get_action_raw_strength("move_up")
 		)
-	else:
-		movement_vector = Vector2.ZERO
+	elif _is_moving():
+		_stop_moving()
 		
-func is_moving():
+
+func _start_moving():
+	moving_particles.emitting = true
+
+
+func _stop_moving():
+	moving_particles.emitting = false
+	movement_vector = Vector2.ZERO
+
+
+func _start_can_steal():
+	if current_state == States.CAN_STEAL:
+		return
+	current_state = States.CAN_STEAL
+	claw.show()
+
+
+func _start_stealing():
+	_stop_moving()
+	claw.shoot(current_target, wait_bar)
+	current_state = States.STEALING
+	set_process_input(false)
+	claw.connect("retracted", self, "_check_status", [], CONNECT_ONESHOT)
+
+
+func _start_can_buy():
+	if current_state == States.CAN_BUY:
+		return
+	current_state = States.CAN_BUY
+	dive_anim(0.0)
+
+
+func _start_free():
+	if current_state == States.FREE:
+		return
+	current_state = States.FREE
+	dive_anim(1.0)
+	claw.hide()
+	
+	
+func _is_moving():
 	return movement_vector != Vector2.ZERO
 
-func is_controller_input():
+
+func _is_controller_input():
 	return Input.is_action_pressed("move_down") or Input.is_action_pressed("move_up") or Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right")
 
 
-func spotted():
-	Game.emit_signal("game_over")
+func _check_status():
+	if current_state == States.GAME_OVER:
+		return
+		
+	set_process_input(true)
+	if current_target is EnemyShip:
+		_start_can_steal()
+		
+	if current_target is Ramschladen:
+		_start_can_buy()
 
-func gain_gold(gains):
-	gold += gains
-	emit_signal("gold_gained", gains)
-	
+	if !is_instance_valid(current_target):
+		current_target == null
+
+	if current_target == null:
+		_start_free()
+
+		
+func _set_current_target():
+	if current_state == States.GAME_OVER:
+		return
+	if possible_targets.empty():
+		current_target = null
+		_check_status()
+		return
+
+	current_target = possible_targets.pop_front()
+	_check_status()
+
 
 func _on_Area2D_body_entered(body: Node) -> void:
-	if body is EnemyShip:
-		current_state = States.CAN_STEAL
-		self.body = body
-		claw.show()
-	if body is Ramschladen:
-		current_state = States.CAN_BUY
-		self.body = body
-		dive_anim(0.0)
+	if current_state == States.GAME_OVER:
+		return
+	possible_targets.append(body)
+	_set_current_target()
+
 
 func dive_anim(target:float) -> void:
 	#print("diving in richtung", target)
@@ -120,13 +189,15 @@ func dive_anim(target:float) -> void:
 
 
 func _on_Area2D_body_exited(body: Node) -> void:
-	if current_state != States.FREE:
-		current_state = States.FREE
-		self.body = null
-		dive_anim(1.0)
-		if not claw.tween or not claw.tween.is_valid():
-			claw.hide()
+	if current_state == States.GAME_OVER:
+		return
+	possible_targets.erase(body)
+	if current_target == body:
+		current_target = null
+	_set_current_target()
+
 	
 func pause():
 	.pause()
+	_stop_moving()
 	current_movement_speed = 0

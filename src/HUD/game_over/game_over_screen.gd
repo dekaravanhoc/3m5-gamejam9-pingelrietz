@@ -37,5 +37,5 @@ func _input(event):
 	if !process_input:
 		return
 		
-	if event.is_pressed() and !event.is_echo():
+	if Input.is_action_pressed("ui_cancel"):
 		Game.to_main_menu()

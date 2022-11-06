@@ -82,9 +82,7 @@ func _die() -> void:
 	shape.disabled = true
 	moving_particles.emitting = false
 	_sink()
-	#_reset_movement()
-	#hide()
-	#_spawn()
+	
 	
 func _sink() -> void:
 	sprite.material.set_shader_param("is_sinking", true);

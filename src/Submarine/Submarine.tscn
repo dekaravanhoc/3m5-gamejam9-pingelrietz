@@ -71,9 +71,13 @@ animation = "down"
 
 [node name="MovingParticles" parent="Sprite" instance=ExtResource( 7 )]
 position = Vector2( 0, 143 )
+emitting = false
 amount = 250
 lifetime = 2.0
 process_material = SubResource( 7 )
+
+[node name="Claw" parent="Sprite" instance=ExtResource( 5 )]
+position = Vector2( 0, 54 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
@@ -83,8 +87,6 @@ scale = Vector2( 0.999999, 0.999998 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea2D"]
 shape = SubResource( 8 )
-
-[node name="Claw" parent="." instance=ExtResource( 5 )]
 
 [node name="WaitBar" parent="." instance=ExtResource( 6 )]
 margin_left = -99.0

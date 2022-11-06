@@ -14,14 +14,12 @@ script = ExtResource( 4 )
 rotation = 1.5708
 
 [node name="HookRight" type="Sprite" parent="Hook"]
-position = Vector2( 21, -61 )
 texture = ExtResource( 1 )
-offset = Vector2( 0, 61 )
+offset = Vector2( 22, -45 )
 
 [node name="HookLeft" type="Sprite" parent="Hook"]
-position = Vector2( -23, -61 )
 texture = ExtResource( 3 )
-offset = Vector2( 0, 61 )
+offset = Vector2( -22, -45 )
 
 [node name="Area2D" type="Area2D" parent="Hook"]
 collision_layer = 0
@@ -34,7 +32,6 @@ shape = SubResource( 3 )
 [node name="Chain" type="Sprite" parent="Hook"]
 texture = ExtResource( 2 )
 centered = false
-offset = Vector2( -5, 61 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 12, 0 )
 
