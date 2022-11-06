@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://src/HUD/radar/radar.gd" type="Script" id=1]
+
+[sub_resource type="RayShape2D" id=1]
 
 [node name="RadarViewportScene" type="Node2D"]
 script = ExtResource( 1 )
@@ -8,15 +10,19 @@ lines_color = Color( 0, 1, 0, 1 )
 enemy_color = Color( 1, 0, 0, 1 )
 ramschladen_color = Color( 0, 1, 1, 1 )
 
-[node name="PingTimer" type="Timer" parent="."]
-process_mode = 0
-wait_time = 4.0
-autostart = true
-
 [node name="RadarFill" type="Polygon2D" parent="."]
 position = Vector2( 200, 200 )
 color = Color( 0, 1, 0.0941176, 0.788235 )
 polygon = PoolVector2Array( 0, 0, -100, -125, 0, -150 )
 vertex_colors = PoolColorArray( 0, 1, 0.0941176, 0.788235, 0, 1, 0.0941176, 0, 0, 1, 0.0941176, 0.788235 )
 
-[connection signal="timeout" from="PingTimer" to="." method="_on_PingTimer_timeout"]
+[node name="RadarScanner" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 6
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RadarScanner"]
+rotation = -3.14159
+shape = SubResource( 1 )
+
+[connection signal="body_entered" from="RadarScanner" to="." method="_on_RadarScanner_body_entered"]
