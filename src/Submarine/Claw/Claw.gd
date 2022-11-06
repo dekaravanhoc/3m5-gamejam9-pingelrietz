@@ -20,7 +20,6 @@ func _ready():
 	hide()
 
 func shoot(body, wait_bar: WaitBar) -> void:
-	show()
 	enemy_ship = body
 	#Hook zum EnemyShip rotieren
 	look_at(enemy_ship.global_position)

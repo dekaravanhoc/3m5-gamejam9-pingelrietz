@@ -17,6 +17,7 @@ var scanner: Area2D
 onready var timer: Timer = find_node("MoveTimer")
 onready var loot_label: Label = find_node("LootLabel")
 onready var spawn_check: Area2D = find_node("SpawnCheck")
+onready var moving_particles: Particles2D = find_node("MovingParticles")
 
 func _ready():
 	scanner = scanner_scene.instance()
@@ -41,6 +42,8 @@ func _spawn() -> void:
 	shape.disabled = false
 	_change_movement_direction()
 	_reset_shader_params()
+	sprite.modulate.a = 1.0
+	sprite.scale = Vector2(1,1)
 	loot = randi() % (max_loot - min_loot) + min_loot
 	loot_label.text = "??? Gold"
 	add_to_group("poi")
@@ -72,20 +75,23 @@ func _steal() -> int:
 
 
 func _die() -> void:
-	loot_label.text = "0"
+	loot_label.get_parent().hide()
 	current_state = States.DIE
 	remove_from_group("poi")
 	scanner.monitoring = false
 	shape.disabled = true
+	moving_particles.emitting = false
 	_sink()
 	#_reset_movement()
 	#hide()
 	#_spawn()
 	
 func _sink() -> void:
-	$Sprite.material.set_shader_param("is_sinking", true);
+	sprite.material.set_shader_param("is_sinking", true);
 	var tween = get_tree().create_tween()
-	tween.tween_property($Sprite, "material:shader_param/progress", 1.0, sink_speed)
+	tween.tween_property(sprite, "material:shader_param/progress", 1.0, sink_speed)
+	tween.tween_property(sprite, "modulate:a", 0.0, sink_speed)
+	tween.parallel().tween_property(sprite, "scale", Vector2(0.5, 0.5), sink_speed)
 	tween.tween_callback(self, "hide")
 	tween.tween_callback(self, "_spawn")
 	tween.tween_callback(self, "_reset_movement")
@@ -93,15 +99,17 @@ func _sink() -> void:
 	
 
 func _reset_shader_params() -> void:
-	$Sprite.material.set_shader_param("is_sinking", false);
-	$Sprite.material.set_shader_param("progress", 0.0);
+	sprite.material.set_shader_param("is_sinking", false);
+	sprite.material.set_shader_param("progress", 0.0);
 
 func pause() -> void:
 	scanner.set_deferred("monitoring", false)
+	moving_particles.emitting = false
 	.pause()
 	
 func unpause() -> void:
 	scanner.set_deferred("monitoring", true)
+	moving_particles.emitting = true
 	.pause()
 	
 
@@ -117,8 +125,4 @@ func _on_OtherEnemyCheck_body_entered(body):
 	var direction_to_body = body.global_position - global_position
 	var new_direction = direction_to_body.rotated(PI)
 	_change_movement_direction(new_direction)
-	
-	
-func _game_over():
-	pause()
-	
+

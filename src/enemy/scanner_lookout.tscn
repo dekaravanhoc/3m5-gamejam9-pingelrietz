@@ -9,7 +9,7 @@ rotation_speed_in_seconds = 10
 color = Color( 0, 0, 0, 1 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="0"]
-polygon = PoolVector2Array( 0, -10, -500, -1000, 500, -1000 )
+polygon = PoolVector2Array( 4, -60, -430, -970, 419, -970 )
 
 [node name="ScanAreaDraw" type="Polygon2D" parent="." index="1"]
 color = Color( 0, 1, 0.0392157, 0.388235 )

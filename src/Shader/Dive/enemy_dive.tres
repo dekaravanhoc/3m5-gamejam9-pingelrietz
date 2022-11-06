@@ -7,38 +7,28 @@ uniform bool is_sinking = false;
 uniform float progress : hint_range(0.0, 1.0);
 uniform sampler2D mask_texture;
 uniform sampler2D sprite_down;
-uniform sampler2D sprite_up;
 
-vec4 dive_down(vec2 uv){
+vec4 dive_down(sampler2D tex, vec2 uv){
 	
 	float mask = texture(mask_texture, uv).r;
-	float mix_value = 0.;
-	/*
-	if(texture(sprite_down,uv).a <= 0.1){
-		alpha = 0.0;
-	} else {
-		alpha = mask;
-	}*/
-	if(mask >= progress){
-        mix_value = mask;
+	
+	if(mask <= progress){
+		return texture(sprite_down,uv);
     }
-	if(texture(sprite_up, uv).a == 0.0){
-		mix_value = 0.;
+	else if(mask <= (progress + 0.2)){
+		float mix_value = (mask - progress) / 0.2; 
+		vec4 mix_color = mix(texture(sprite_down,uv), texture(tex,uv), mix_value);
+		return vec4(mix_color);
 	}
-	//float alpha = clamp(mask, texture(sprite_up,uv).a, texture(sprite_up,uv).a);
-	vec3 up_color = texture(sprite_up, uv).rgb;
-	vec3 down_color = texture(sprite_down, uv).rgb;
-	//down_color = smoothstep(down_color, vec3(alpha), progress);
-	vec3 color = mix(down_color, up_color, mix_value);
-	//alpha = mix(texture(sprite_up, uv).a, texture(sprite_down, uv).a, progress);
-	float alpha = mix(texture(sprite_down, uv).a, texture(sprite_up, uv).a, mix_value);
-	alpha = mix(alpha, 0, progress);
-	return vec4(color, alpha);
+	else
+	{
+		return texture(tex,uv);
+	}
 }
 
 void fragment(){
 	if(is_sinking){
-		COLOR = dive_down(UV);
+		COLOR = dive_down(TEXTURE, UV);
 	} else {
 		COLOR = texture(TEXTURE,UV);
 	}

@@ -15,6 +15,7 @@ var spawn_point: Vector2
 
 onready var wait_bar: WaitBar = find_node("WaitBar")
 onready var claw: Claw = find_node("Claw")
+onready var moving_particles = find_node("MovingParticles")
 
 signal fuel_changed
 signal gold_gained(gains)
@@ -37,12 +38,18 @@ func _physics_process(delta: float) -> void:
 	if is_moving():
 		current_fuel = clamp(float(current_fuel) - float(fuel_loss_rate) * delta, 0, max_fuel)
 		emit_signal("fuel_changed")
+		if !moving_particles.emitting:
+			moving_particles.emitting = true
 		
-	elif current_fuel == 0:
-		if current_state == States.CAN_BUY and gold > 0:
-			pass
-		else:
-			Game.emit_signal("game_over")
+	else:
+		if moving_particles.emitting:
+			moving_particles.emitting = false
+		
+		if current_fuel == 0:
+			if current_state == States.CAN_BUY and gold > 0:
+				pass
+			else:
+				Game.emit_signal("game_over")
 			
 	if current_state == States.CAN_STEAL:
 		claw.look_at(body.global_position)

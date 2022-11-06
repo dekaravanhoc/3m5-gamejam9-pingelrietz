@@ -1,0 +1,33 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type canvas_item;
+
+uniform float progress : hint_range(0.0, 1.0);
+uniform sampler2D mask_texture;
+uniform sampler2D sprite_up;
+
+vec4 dive_down(sampler2D tex, vec2 uv){
+	
+	float mask = texture(mask_texture, uv).r;
+	
+	
+	if(mask <= progress){
+		return texture(tex,uv);
+    }
+	else if(mask <= (progress + 0.4)){
+		float mix_value = 1.0 -(mask - progress) / 0.4; 
+		vec4 mix_color = mix(texture(sprite_up,uv), texture(tex,uv), mix_value);
+		return vec4(mix_color);
+	}
+	else
+	{
+		return texture(sprite_up,uv);
+		
+	}
+}
+
+void fragment(){
+	COLOR = dive_down(TEXTURE, UV);
+
+}"
